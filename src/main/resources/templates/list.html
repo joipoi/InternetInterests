@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<!-- <link  rel="stylesheet" href="../static/stylesheet.css" />
+ <script type="text/javascript" src="../static/script.js"></script> -->
+<link th:href="@{/stylesheet.css?version=51}" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script type="text/javascript" th:src="@{/script.js}"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<header> HEADER HERE  <a th:href="@{/frontpage}"> <button>frontpage </button> </a></header>
+<body>
+<div id="mediaTableDiv">
+<table id="mediaTable">
+</table>
+</div>
+<div id="sideDiv">
+    SIDE DIV HERE
+    <p>testing</p>
+</div>
+
+
+
+<footer>
+    <p>FOOTER HERE</p>
+
+    <div id="addDiv">
+        <form action="#" th:action="@{/file}" th:object="${media}"  method="post" id="myForm">
+            <label>name:</label>
+            <input  id="nameInput"  th:field="*{name}">
+            <label>type:</label>
+            <input  id="typeInput" th:field="*{type}"  >
+            <label>link:</label>
+            <input id="linkInput" th:field="*{link}" >
+            <label>date:</label>
+            <input  id="dateInput" th:field="*{stringDate}" >
+            <label>haveTried:</label>
+            <input  id="haveTriedInput" th:field="*{haveTried}">
+            <label>rating:</label>
+            <input  id="ratingInput" th:field="*{rating}">
+
+            <button id="submitMediaBtn">Submit Media</button>
+        </form>
+    </div>
+
+    <div id="removeDiv">  <!-- bad name fix also not use atm -->
+        <form action="#" th:action="@{/removeMedia}" th:object="${media}"  method="post" id="removeForm">
+            <input  id="mediaNameInput"  th:field="*{name}">
+
+        </form>
+    </div>
+
+    <div id="haveTriedDiv">
+        <form action="#" th:action="@{/haveTried}" th:object="${media}"  method="post" id="haveTriedForm">
+            <input  id="haveTriedFormInput"  th:field="*{name}">
+
+        </form>
+    </div>
+
+    <select name="haveSeen" id="haveSeenSelect" onchange="haveSeenSelectFunc()">
+        <option value="all">show all media</option>
+        <option value="past">show past media</option>
+        <option value="future">show future media</option>
+    </select>
+
+    <select name="type" id="typeSelect" onchange="typeSelectFunc()">
+        <option value="all">all</option>
+        <option value="movie">movie</option>
+        <option value="game">game</option>
+        <option value="music">music</option>
+        <option value="tvShow">tvshow</option>
+        <option value="baking">baking</option>
+        <option value="cooking">cooking</option>
+        <option value="manga">manga</option>
+    </select>
+
+    <button id="addMediaBtn">Add media</button>
+    <button id="removeMediaBtn">Remove selected media</button>
+    <button id="haveTriedBtn">Set Media as "haveTried"</button>
+
+    <button id="changeViewBtn"> change view</button>
+</footer>
+<script th:inline="javascript">
+      var nameJs = /*[[${mediaList}]]*/;
+      var typeJs = /*[[${type}]]*/;
+
+        document.onload = document.getElementById("typeSelect").value = typeJs;
+        document.onload = init(nameJs);
+        document.onload = generateMediaTableAlt(typeJs, "all");
+      </script>
+</body>
+</html>
+

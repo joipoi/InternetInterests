@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<!-- <link  rel="stylesheet" href="../static/stylesheet.css" />
+ <script type="text/javascript" src="../static/script.js"></script> -->
+<link th:href="@{/stylesheet.css?version=52}" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script type="text/javascript" th:src="@{/script.js}"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<header> HEADER HERE  <a th:href="@{/frontpage}"> <button>frontpage </button> </a></header>
+<body>
+<div id="mediaPageDiv">
+
+</div>
+<div id="sideDiv">
+    SIDE DIV HERE
+    <p>testing</p>
+</div>
+
+
+
+<footer>
+    <p>FOOTER HERE</p>
+
+</footer>
+<script th:inline="javascript">
+var mediaListJs = /*[[${mediaList}]]*/;
+var mediaJs = /*[[${media}]]*/;
+
+        document.onload = generateMediaPage(mediaListJs, mediaJs);
+      </script>
+</body>
+</html>
+

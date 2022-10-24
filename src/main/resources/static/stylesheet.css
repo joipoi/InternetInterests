@@ -1,0 +1,92 @@
+body{
+ margin: 0;
+ margin-left: 10px;
+ }
+p {
+margin: 0;
+}
+#mediaTable {
+    color:blue;
+    width: 100%;
+}
+#mediaTable td, #ingredientsTable th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    padding-bottom:  10px;
+  }
+#mediaTable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #04AA6D;
+    color: white;
+}
+#mediaTable tr:hover {background-color: #ddd;}
+
+#addDiv {
+ display: none;
+    z-index: 1;
+    border:solid;
+    padding:10px;
+}
+#haveTriedDiv {
+ display: none;
+}
+#haveTriedFormInput{
+display: none;
+}
+#removeDiv{
+display: none;
+}
+footer{
+    width:100%;
+   /* border:4px solid #ff5500; */
+    bottom: 0;
+    clear: both;
+}
+header{
+height:40px;
+    width:100%;
+   /* border:4px solid #ff5500; */
+    top: 0;
+}
+#sideDiv{
+height:90%;
+width:30%;
+   /*  border:4px solid #00bbff; */
+     float:right;
+     position: relative;
+
+}
+#mediaTableDiv{
+width:68%;
+   /* border:4px solid #00bbff; */
+    float:left;
+    position:relative;
+}
+.mediaDiv{
+float:left;
+width:20%;
+height:33%;
+cursor: pointer;
+/*margin-left: 10px; */
+}
+.checked {
+  color: orange;
+}
+#mediaPageDiv {
+width:68%;
+float:left;
+    position:relative;
+}
+#mediaBox {
+float:left;
+width:40%;
+}
+#mediaTextBox{
+float:left;
+width:50%;
+ margin-left:4%;
+}
+
+

@@ -1,0 +1,15 @@
+name,type,link,date,haveTried,rating
+robocop,movie,youtube.com,1999-06-01,false,-1
+the office,tvShow,netlix.com,2011,true,2
+blueberry pie,baking,Baking book,2022-01-04,true,3
+hamburger,cooking,burgers.com,2022-05-05,true,2
+monster,manga,cruncyroll.com,2022-04-05,true,2
+hitchhikers guide to the galaxy,book,aBookStore,2021-01-05,true,3
+harry potter,book,aBookStore,2015-03-06,true,1
+Back to the future,movie,movie.com,2021-01-02,true,2
+Dune,movie,movie.com,2021-01-02,true,2
+Lord Of The Rings,movie,movie.com,2021-01-02,true,2
+Star Trek 3,movie,movie.com, 2021-01-02,true,2
+Alien,movie,movie.com,2021-01-02,true,2
+Pulp Fiction,movie,movie.com,2021-01-02,true,2
+Minecraft,game,mojang.com,2021-03-02,true,2
