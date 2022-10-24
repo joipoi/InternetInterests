@@ -36,7 +36,7 @@ public class mainRun implements CommandLineRunner {
 
         JFrame jFrame = new JFrame("a");
         jFrame.setLayout(null);
-        JLabel label = new JLabel("Do you have a Database? if you dont know what that means press no");
+        JLabel label = new JLabel("Press button to open project in your browser");
         label.setBounds(0,0, 500, 100);
         jFrame.getContentPane().add(label);
         JLabel label2 = new JLabel("exit this window to exit program");
@@ -44,8 +44,8 @@ public class mainRun implements CommandLineRunner {
         jFrame.getContentPane().add(label2);
 
 
-        JButton noBtn = new JButton("no");
-        noBtn.setBounds(300,100, 200, 100);
+        JButton noBtn = new JButton("button");
+        noBtn.setBounds(0,100, 200, 100);
         jFrame.getContentPane().add(noBtn);
         noBtn.addActionListener(new ActionListener() {
             @Override
