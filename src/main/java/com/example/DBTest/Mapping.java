@@ -15,7 +15,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,16 +24,6 @@ public class Mapping {
     Media[] mediaList;
 
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-
-    private List<Map<String, Object>>  getAllMedia() {
-
-        String sql = "SELECT * FROM media;";
-        List<Map<String, Object>> list =  jdbcTemplate.queryForList(sql);
-
-        return list;
-    }
 
     private void readFromFile() {
         List<Map<String, Object>> list = new ArrayList<>();
@@ -172,16 +161,6 @@ public class Mapping {
 
     }
 
-
-    @GetMapping("/db")
-    public String DBHome(Model model) {
-
-
-            model.addAttribute("mediaList", getAllMedia());
-
-
-        return "db";
-    }
 
     @GetMapping("/file")
     public String fileHome(Model model) {
