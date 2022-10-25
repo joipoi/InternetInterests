@@ -2,9 +2,9 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <!-- <link  rel="stylesheet" href="../static/stylesheet.css" />
  <script type="text/javascript" src="../static/script.js"></script> -->
-<link th:href="@{/stylesheet.css?version=51}" rel="stylesheet" />
+<link th:href="@{/stylesheet.css?version=52}" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script type="text/javascript" th:src="@{/script.js}"></script>
+<script type="text/javascript" th:src="@{/script.js?Num=1}"></script>
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -17,31 +17,22 @@
 </table>
 </div>
 <div id="sideDiv">
-    SIDE DIV HERE
-    <p>testing</p>
-</div>
-
-
-
-<footer>
-    <p>FOOTER HERE</p>
-
     <div id="addDiv">
-        <form action="#" th:action="@{/file}" th:object="${media}"  method="post" id="myForm">
-            <label>name:</label>
+        <form action="#" th:action="@{/list}" th:object="${media}"  method="post" id="myForm">
+            <label>Name:</label>
             <input  id="nameInput"  th:field="*{name}">
-            <label>type:</label>
+            <label>Type:</label>
             <input  id="typeInput" th:field="*{type}"  >
-            <label>link:</label>
+            <label>Link:</label>
             <input id="linkInput" th:field="*{link}" >
-            <label>date:</label>
+            <label>Date:</label>
             <input  id="dateInput" th:field="*{stringDate}" >
-            <label>haveTried:</label>
+            <label>HaveTried:</label>
             <input  id="haveTriedInput" th:field="*{haveTried}">
-            <label>rating:</label>
+            <label>Rating:</label>
             <input  id="ratingInput" th:field="*{rating}">
 
-            <button id="submitMediaBtn">Submit Media</button>
+            <button id="submitMediaBtn"  class="button1" >Submit Media</button>
         </form>
     </div>
 
@@ -59,13 +50,13 @@
         </form>
     </div>
 
-    <select name="haveSeen" id="haveSeenSelect" onchange="haveSeenSelectFunc()">
+    <select name="haveSeen" id="haveSeenSelect" class="select1" onchange="haveSeenSelectFunc()">
         <option value="all">show all media</option>
         <option value="past">show past media</option>
         <option value="future">show future media</option>
     </select>
 
-    <select name="type" id="typeSelect" onchange="typeSelectFunc()">
+    <select name="type" id="typeSelect" class="select1" onchange="typeSelectFunc()">
         <option value="all">all</option>
         <option value="movie">movie</option>
         <option value="game">game</option>
@@ -77,11 +68,18 @@
         <option value="book">book</option>
     </select>
 
-    <button id="addMediaBtn">Add media</button>
-    <button id="removeMediaBtn">Remove selected media</button>
-    <button id="haveTriedBtn">Set Media as "haveTried"</button>
+    <button id="addMediaBtn" class="button1">Add media</button>
+    <button id="removeMediaBtn"  class="button1">Remove selected media</button>
+    <button id="haveTriedBtn"  class="button1">Set Media as "haveTried"</button>
 
-    <button id="changeViewBtn"> change view</button>
+    <button id="changeViewBtn"  class="button1"> change view</button>
+</div>
+
+
+<footer>
+    <p>FOOTER HERE</p>
+
+
 </footer>
 <script th:inline="javascript">
       var nameJs = /*[[${mediaList}]]*/;

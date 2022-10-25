@@ -47,8 +47,6 @@ public class Mapping {
                 row = new HashMap<String, Object>();
 
                 String[] attributes = line.split(",");
-                System.out.println(headers);
-                System.out.println(attributes.toString());
                 for (int i = 0 ; i < headers.size() ; i ++) {
                     row.put(headers.get(i), attributes[i]);
                 }
@@ -92,7 +90,6 @@ public class Mapping {
         try {
             FileWriter myWriter = new FileWriter("src/main/resources/firstSheet.csv");
             BufferedWriter bw = new BufferedWriter(myWriter);
-            printMediaList();
             bw.write("name" +  "," + "type" +  "," + "link" +  "," +
                     "date" +  "," + "haveTried" +  "," + "rating");
             for(int i = 0; i < mediaList.length; i++) {
@@ -127,7 +124,7 @@ public class Mapping {
     }
 
     private void setMediaAsHaveTried(String mediaName){
-        System.out.println(mediaName);
+       // System.out.println(mediaName);
         for(int i = 0; i < mediaList.length; i++) {
             if(mediaList[i].name.equals(mediaName)) {
                 mediaList[i].haveTried = true; //problem is file is not updated right now
@@ -211,10 +208,9 @@ public class Mapping {
 
 
 
-    @PostMapping("/file")
+    @PostMapping("/list")
     public String addMedia(@ModelAttribute Media media,  Model model) {
 
-        System.out.println(media.toString());
         model.addAttribute("media", media);
         addMediaToFile(media.name, media.type, media.link, media.stringDate, media.haveTried, media.rating);
 
@@ -224,11 +220,11 @@ public class Mapping {
         model.addAttribute("mediaList", mediaList);
 
 
-        return "file";
+        return "list";
     }
     @PostMapping("/removeMedia")
     public String removeMedia(@ModelAttribute Media media,  Model model) {
-        System.out.println("remove media");
+        System.out.println("name = " +  media.name);
 
         removeMedia(media.name);
 
@@ -240,7 +236,7 @@ public class Mapping {
         model.addAttribute("mediaList", mediaList);
 
 
-        return "file";
+        return "list";
     }
     @PostMapping("/haveTried")
     public String setMediaAsHaveTried(@ModelAttribute Media media,  Model model) {
@@ -255,7 +251,7 @@ public class Mapping {
         model.addAttribute("mediaList", mediaList);
 
         printMediaList();
-        return "file";
+        return "list";
     }
 
 

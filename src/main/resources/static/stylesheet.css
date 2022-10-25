@@ -39,28 +39,26 @@ display: none;
 display: none;
 }
 footer{
-    width:100%;
-   /* border:4px solid #ff5500; */
+background-color: #bfbcb2;
+height:60px;
     bottom: 0;
     clear: both;
 }
 header{
-height:40px;
-    width:100%;
-   /* border:4px solid #ff5500; */
+background-color: #bfbcb2;
+height:60px;
     top: 0;
 }
 #sideDiv{
-height:90%;
-width:30%;
-   /*  border:4px solid #00bbff; */
+background-color: #debc4b;
+ height:800px;
+width:20%;
      float:right;
      position: relative;
 
 }
 #mediaTableDiv{
 width:68%;
-   /* border:4px solid #00bbff; */
     float:left;
     position:relative;
 }
@@ -69,7 +67,6 @@ float:left;
 width:20%;
 height:33%;
 cursor: pointer;
-/*margin-left: 10px; */
 }
 .checked {
   color: orange;
@@ -87,6 +84,58 @@ width:40%;
 float:left;
 width:50%;
  margin-left:4%;
+}
+.button1 {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+
+
+}
+#haveSeenSelect{
+
+}
+.select1{
+ background-color: #0563af;
+  color: white;
+  padding: 12px;
+  width: 250px;
+  border: none;
+  font-size: 20px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  -webkit-appearance: button;
+  appearance: button;
+  outline: none;
+}
+#myForm {
+font: 13px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+#myForm label{
+margin:0 0 3px 0;
+	padding:0px;
+	display:block;
+	font-weight: bold;
+}
+#myForm input{
+box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	border:1px solid #BEBEBE;
+	padding: 7px;
+	margin:0px;
+	-webkit-transition: all 0.30s ease-in-out;
+	-moz-transition: all 0.30s ease-in-out;
+	-ms-transition: all 0.30s ease-in-out;
+	-o-transition: all 0.30s ease-in-out;
+	outline: none;
 }
 
 

@@ -63,6 +63,10 @@ function init(mediaList1) {
 //simple media list with table view
 function generateMediaTable(typeSelect, haveTriedSelect) {
 
+        if(typeSelect == "" || typeSelect == null) {
+            typeSelect = "all";
+            typeSelectValue = "all"
+        }
         tableDiv.innerHTML = "";
         table = document.createElement('table');
         table.id = 'mediaTable';
@@ -124,6 +128,11 @@ function generateMediaTable(typeSelect, haveTriedSelect) {
 
 //media list with images
 function generateMediaTableAlt(typeSelect, haveTriedSelect) {
+
+if(typeSelect == "" || typeSelect == null) {
+            typeSelect = "all";
+            typeSelectValue = "all"
+        }
 
         tableDiv.innerHTML = "";
 
@@ -203,7 +212,6 @@ function generateStarsFromRating(rating) {
                  break;
 
 }
-console.log(htmlStarString);
 return htmlStarString;
 
 }
@@ -266,6 +274,9 @@ function typeSelectFunc() {
 }
 
 function showAddMedia() {
+document.getElementById("haveTriedFormInput").value = "test";
+     document.getElementById("mediaNameInput").value = "testi";
+     console.log(document.getElementById("mediaNameInput").value + " hello hello");
 
 if(document.getElementById("addDiv").style.display == "block") {
     document.getElementById("addDiv").style.display = "none";
@@ -290,13 +301,13 @@ function addRowToDB() {
 }
 function removeSelectedMedia() {
 var removeForm = document.getElementById("removeForm");
-document.getElementById("mediaNameInput").value = selectedRow.children[0].innerHTML;
+document.getElementById("mediaNameInput").value = selectedRow.children[0].innerText;
 removeForm.submit();
 }
 
 function setAsHaveTried() {
  var myForm = document.getElementById("haveTriedForm");
-         document.getElementById("haveTriedFormInput").value = selectedRow.children[0].innerHTML;
+         document.getElementById("haveTriedFormInput").value = selectedRow.children[0].innerText;
 
         myForm.action = "/haveTried"; //do i need this
               myForm.submit();
