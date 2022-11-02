@@ -2,15 +2,24 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <!-- <link  rel="stylesheet" href="../static/stylesheet.css" />
  <script type="text/javascript" src="../static/script.js"></script> -->
-<link th:href="@{/stylesheet.css?version=52}" rel="stylesheet" />
+<link th:href="@{/stylesheet.css?version=53}" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script type="text/javascript" th:src="@{/script.js?Num=1}"></script>
+<script type="text/javascript" th:src="@{/script.js?Num=2}"></script>
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 
-<header> HEADER HERE  <a th:href="@{/frontpage}"> <button>frontpage </button> </a></header>
+<header>  <a th:href="@{/frontpage}">  </a>
+    <a th:href="@{/list(type='movie')}"> <button class="button1">Movie </button> </a>
+    <a th:href="@{/list(type='tvShow')}"> <button class="button1">TvShow </button> </a>
+    <a th:href="@{/list(type='book')}"> <button class="button1">Book </button> </a>
+    <a th:href="@{/list(type='manga')}"> <button class="button1">Manga </button> </a>
+    <a th:href="@{/list(type='baking')}"> <button class="button1">Baking </button> </a>
+    <a th:href="@{/list(type='cooking')}"> <button class="button1">Cooking </button> </a>
+    <a th:href="@{/list(type='game')}"> <button class="button1">Game </button> </a>
+
+</header>
 <body>
 <div id="mediaTableDiv">
 <table id="mediaTable">
@@ -18,7 +27,7 @@
 </div>
 <div id="sideDiv">
     <div id="addDiv">
-        <form action="#" th:action="@{/list}" th:object="${media}"  method="post" id="myForm">
+        <form action="#" th:action="@{/list/addMedia1}" th:object="${media}"  method="post" id="myForm">
             <label>Name:</label>
             <input  id="nameInput"  th:field="*{name}">
             <label>Type:</label>
@@ -35,9 +44,8 @@
             <button id="submitMediaBtn"  class="button1" >Submit Media</button>
         </form>
     </div>
-
     <div id="removeDiv">  <!-- bad name fix also not use atm -->
-        <form action="#" th:action="@{/removeMedia}" th:object="${media}"  method="post" id="removeForm">
+        <form action="#" th:action="@{/list(removeMedia='test')}" th:object="${media}"  method="post" id="removeForm">
             <input  id="mediaNameInput"  th:field="*{name}">
 
         </form>
@@ -75,19 +83,23 @@
     <button id="changeViewBtn"  class="button1"> change view</button>
 </div>
 
-
-<footer>
-    <p>FOOTER HERE</p>
-
-
-</footer>
 <script th:inline="javascript">
       var nameJs = /*[[${mediaList}]]*/;
       var typeJs = /*[[${type}]]*/;
+      var selectedRowText = " ";
 
         document.onload = document.getElementById("typeSelect").value = typeJs;
         document.onload = init(nameJs);
         document.onload = generateMediaTableAlt(typeJs, "all");
+
+        document.getElementById("removeMediaBtn").addEventListener("click", function() {
+         selectedRowText = getSelectedRowText();
+                document.getElementById("removeForm").action = "/list?removeMedia=" +selectedRowText;
+                removeSelectedMedia();
+
+            });
+
+
       </script>
 </body>
 </html>

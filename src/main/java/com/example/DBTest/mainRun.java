@@ -51,7 +51,7 @@ public class mainRun implements CommandLineRunner {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    rt.exec("rundll32 url.dll,FileProtocolHandler " + "http://localhost:8080/frontpage");
+                    rt.exec("rundll32 url.dll,FileProtocolHandler " + "http://localhost:8080/list?type=all");
                 } catch (IOException error) {
                     error.printStackTrace();
                 }
@@ -66,6 +66,15 @@ public class mainRun implements CommandLineRunner {
 
 
 
-        // String sql = "INSERT INTO `recipe_app`.`ingredients_at_home` (`name`, `type`, `amount`, `dateBought`, `expirationDate`, `price`) VALUES ('a', 'b', 'a', '2022-06-05', '2022-06-05', '3');";
+
     }
 }
+
+
+/*
+todo
+no frontpage, make medialist the start
+
+
+
+*/

@@ -208,11 +208,24 @@ public class Mapping {
 
 
 
-    @PostMapping("/list")
+    @PostMapping("/list/addMedia1")
     public String addMedia(@ModelAttribute Media media,  Model model) {
 
         model.addAttribute("media", media);
         addMediaToFile(media.name, media.type, media.link, media.stringDate, media.haveTried, media.rating);
+
+        readFromFile();
+
+        model.addAttribute("mediaList", mediaList);
+
+
+        return "list";
+    }
+    @PostMapping("/list{removeMedia}")
+    public String addMedia123(@ModelAttribute Media media,  Model model, @RequestParam String removeMedia) {
+
+        model.addAttribute("media", media);
+        removeMedia(media.name);
 
 
         readFromFile();

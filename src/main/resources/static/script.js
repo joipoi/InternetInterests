@@ -43,9 +43,9 @@ function init(mediaList1) {
         setAsHaveTriedBtn.addEventListener("click", function() {
             setAsHaveTried();
         });
-        removeButton.addEventListener("click", function() {
+       /* removeButton.addEventListener("click", function() {
                 removeSelectedMedia();
-            });
+            }); */
 
             changeViewBtn.addEventListener("click", function() {
                                       if(isSimpleView) {
@@ -220,13 +220,13 @@ function getImgSrc(media) {
 var imgSrc;
  switch(media.name) {
                 case 'robocop':
-                    imgSrc = "images/robocop.jpg";
+                    imgSrc = "/images/robocop.jpg";
                     break;
                 case "Alien":
-                    imgSrc = "images/alien.jpg"
+                    imgSrc = "/images/alien.jpg"
                     break;
                 default:
-                imgSrc = "images/" + media.type + ".jpg"
+                imgSrc = "/images/" + media.type + ".jpg"
             }
 
          return imgSrc;
@@ -302,6 +302,7 @@ function addRowToDB() {
 function removeSelectedMedia() {
 var removeForm = document.getElementById("removeForm");
 document.getElementById("mediaNameInput").value = selectedRow.children[0].innerText;
+
 removeForm.submit();
 }
 
@@ -375,7 +376,9 @@ function setAsSelected(rowObj) {
 
     selectedRow = rowObj;
     selectedRow.style.backgroundColor = "#997f7d";
-
+}
+function getSelectedRowText() {
+return selectedRow.children[0].innerText;
 }
 
 function setAsSelectedDiv() {
