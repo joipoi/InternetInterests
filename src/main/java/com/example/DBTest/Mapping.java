@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class Mapping {
     Media[] mediaList;
+    Media[] wishlist;
 
 
 
@@ -32,8 +33,7 @@ public class Mapping {
 
 
 
-        String fileName = "src/main/resources/firstSheet.csv";
-        // String fileName = "firstSheet.csv"; for jar build
+        String fileName = "src/main/resources/mainMedia.csv";
         Path pathToFile = Paths.get(fileName);
 
         try (BufferedReader br = Files.newBufferedReader(pathToFile,
@@ -81,6 +81,62 @@ public class Mapping {
         }
 
     }
+    private void readFromWishlist() {
+        List<Map<String, Object>> list = new ArrayList<>();
+        Map<String, Object> row;
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");;
+
+
+
+        String fileName = "src/main/resources/wishlist.csv";
+        Path pathToFile = Paths.get(fileName);
+
+        try (BufferedReader br = Files.newBufferedReader(pathToFile,
+                StandardCharsets.UTF_8)) {
+
+            String line = br.readLine();
+            List<String> headers = new ArrayList<>(Arrays.asList(line.split(",")));
+            line = br.readLine();
+
+            while (line != null ) {
+                row = new HashMap<String, Object>();
+
+                String[] attributes = line.split(",");
+                for (int i = 0 ; i < headers.size() ; i ++) {
+                    row.put(headers.get(i), attributes[i]);
+                }
+                list.add(row);
+
+
+
+                line = br.readLine();
+            }
+
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+
+        wishlist = new Media[list.size()];
+
+        for(int i = 0; i < list.size(); i++) {
+            String name = list.get(i).get("name").toString();
+            String type = list.get(i).get("type").toString();
+            String link = list.get(i).get("link").toString();
+            String stringDate = list.get(i).get("date").toString();
+            boolean haveTried;
+            if(list.get(i).get("haveTried").toString().equals("true")) {
+                haveTried = true;
+            } else {
+                haveTried = false;
+            }
+
+            int rating = Integer.parseInt(list.get(i).get("rating").toString());
+
+            wishlist[i] = new Media(name, type, link, stringDate, haveTried, rating);
+        }
+
+    }
+
     private void printMediaList() {
         for (Media media:mediaList) {
             System.out.println(media.toString());
@@ -88,7 +144,7 @@ public class Mapping {
     }
     private void updateList() { //this fucks everything, date + extra line
         try {
-            FileWriter myWriter = new FileWriter("src/main/resources/firstSheet.csv");
+            FileWriter myWriter = new FileWriter("src/main/resources/mainMedia.csv");
             BufferedWriter bw = new BufferedWriter(myWriter);
             bw.write("name" +  "," + "type" +  "," + "link" +  "," +
                     "date" +  "," + "haveTried" +  "," + "rating");
@@ -108,7 +164,7 @@ public class Mapping {
 
     private void addMediaToFile(String name, String type, String link, String date, boolean haveTried, int rating ){
         try {
-            FileWriter myWriter = new FileWriter("src/main/resources/firstSheet.csv", true);
+            FileWriter myWriter = new FileWriter("src/main/resources/mainMedia.csv", true);
             BufferedWriter bw = new BufferedWriter(myWriter);
             bw.newLine();
             String writeString = name +  "," + type +  "," + link +  "," + date +  "," + haveTried +  "," + rating;
@@ -169,6 +225,17 @@ public class Mapping {
 
         return "file";
     }
+    @GetMapping("/wishlist")
+    public String aasdsdfsaaaaa( Model model) {
+        readFromWishlist();
+
+
+        model.addAttribute("media", new Media());
+        model.addAttribute("wishlist", wishlist);
+        return "wishlist";
+    }
+
+
     @GetMapping("/list{type}")
     public String idk(Model model, @RequestParam String type ) {
         readFromFile();
@@ -203,6 +270,7 @@ public class Mapping {
         model.addAttribute("mediaList", mediaList);
         return "media";
     }
+
 
 
 

@@ -24,8 +24,8 @@
 </header>
 <body>
 <div id="mediaTableDiv">
-<table id="mediaTable">
-</table>
+    <table id="mediaTable">
+    </table>
 </div>
 <div id="sideDiv">
     <div id="addDiv">
@@ -87,20 +87,8 @@
 </div>
 
 <script th:inline="javascript">
-      var nameJs = /*[[${mediaList}]]*/;
-      var typeJs = /*[[${type}]]*/;
-      var selectedRowText = " ";
-
-        document.onload = document.getElementById("typeSelect").value = typeJs;
-        document.onload = init(nameJs);
-        document.onload = generateMediaTableAlt(typeJs, "all");
-
-        document.getElementById("removeMediaBtn").addEventListener("click", function() {
-         selectedRowText = getSelectedRowText();
-                document.getElementById("removeForm").action = "/list?removeMedia=" +selectedRowText;
-                removeSelectedMedia();
-
-            });
+      var nameJs = /*[[${wishlist}]]*/;
+       document.onload = initWishlist(nameJs);
 
 
       </script>

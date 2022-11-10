@@ -5,6 +5,7 @@ var haveTriedSelectBool;
 var typeSelectValue
 var tableDiv;
 var isSimpleView = true;
+var wishlist;
 
 
 function init(mediaList1) {
@@ -18,6 +19,56 @@ function init(mediaList1) {
     haveTriedSelectBool = document.getElementById("haveSeenSelect").value;
     typeSelectValue = document.getElementById("typeSelect").value;
     generateMediaTable(haveTriedSelectBool, typeSelectValue);
+    selectedRow = table.rows[0];
+    document.getElementById("addDiv").style.display = "none";
+    document.getElementById("removeDiv").style.display = "none";
+
+      var addMediaBtn = document.getElementById("addMediaBtn");
+
+        var submitMediaBtn = document.getElementById("submitMediaBtn");
+
+        var setAsHaveTriedBtn = document.getElementById("haveTriedBtn");
+
+        var removeButton = document.getElementById("removeMediaBtn");
+
+        var changeViewBtn = document.getElementById("changeViewBtn")
+
+        submitMediaBtn.addEventListener("click", function(){
+                              addRowToDB();
+                          });
+
+        addMediaBtn.addEventListener("click", function(){
+            showAddMedia();
+        });
+
+        setAsHaveTriedBtn.addEventListener("click", function() {
+            setAsHaveTried();
+        });
+       /* removeButton.addEventListener("click", function() {
+                removeSelectedMedia();
+            }); */
+
+            changeViewBtn.addEventListener("click", function() {
+                                      if(isSimpleView) {
+                                        generateMediaTableAlt(typeSelectValue, haveTriedSelectBool);
+                                      }else {
+                                        generateMediaTable(typeSelectValue, haveTriedSelectBool);
+                                      }
+                                  });
+
+
+
+}
+function initWishlist(wishlist1) {
+tableDiv = document.getElementById("mediaTableDiv");
+    table = document.getElementById("mediaTable");
+    wishlist = wishlist1;
+
+
+
+    haveTriedSelectBool = document.getElementById("haveSeenSelect").value;
+    typeSelectValue = document.getElementById("typeSelect").value;
+    generateWishlist(haveTriedSelectBool, typeSelectValue);
     selectedRow = table.rows[0];
     document.getElementById("addDiv").style.display = "none";
     document.getElementById("removeDiv").style.display = "none";
@@ -124,8 +175,6 @@ function generateMediaTable(typeSelect, haveTriedSelect) {
     }
     isSimpleView = true;
 }
-
-
 //media list with images
 function generateMediaTableAlt(typeSelect, haveTriedSelect) {
 
@@ -175,10 +224,6 @@ if(typeSelect == "" || typeSelect == null) {
     isSimpleView = false;
 
 }
-
-/*function linkToMediaPage(media) {
-window.location.replace("media?name=" + media);
-}*/
 function generateMediaPage(mediaList2, media) {
 var mediaPageDiv = document.getElementById("mediaPageDiv");
 var innerHtmlString = "";
@@ -197,6 +242,52 @@ innerHtmlString += '</p>  </div>';
     }
 
 //img(poster), p(name), stars(rating), p(date), p(description), a(link), haveTried(??)
+}
+function generateWishlist(typeSelect, haveTriedSelect) {
+
+if(typeSelect == "" || typeSelect == null) {
+            typeSelect = "all";
+            typeSelectValue = "all"
+        }
+
+        tableDiv.innerHTML = "";
+
+        //this is something
+        var allTypes = false;
+        var allHaveTried = false;
+
+        if(typeSelect == "all") {
+            allTypes = true;
+        }
+        if(haveTriedSelect == "all") {
+            allHaveTried = true;
+        }
+
+
+        //here we make html elements
+
+
+    for(var row = 0; row < wishlist.length; row++) {
+
+        if( (wishlist[row].type == typeSelect || allTypes) && (wishlist[row].haveTried == haveTriedSelect || allHaveTried)) {
+            var mediaDiv = document.createElement('div');
+            var innerHtmlString = "";
+
+            innerHtmlString += '<div class="mediaDiv"> <img src="' + getImgSrc(wishlist[row]) +  '"  width="150" height="225"> <p>' + wishlist[row].name +  '</p>';
+
+            innerHtmlString += generateStarsFromRating(wishlist[row].rating);
+
+            innerHtmlString += '</div>';
+
+        mediaDiv.innerHTML = innerHtmlString;
+        mediaDiv.addEventListener("click", function() {
+        var name = this.getElementsByTagName('p')[0].innerHTML;
+                    window.location.replace("media?mediaName=" + name);
+                 });
+
+        tableDiv.appendChild(mediaDiv);
+        }
+    }
 }
 
 function generateStarsFromRating(rating) {
@@ -377,7 +468,9 @@ function setAsSelected(rowObj) {
     selectedRow = rowObj;
     selectedRow.style.backgroundColor = "#997f7d";
 }
+
 function getSelectedRowText() {
+
 return selectedRow.children[0].innerText;
 }
 
