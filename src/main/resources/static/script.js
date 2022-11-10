@@ -21,7 +21,6 @@ function init(mediaList1) {
     generateMediaTable(haveTriedSelectBool, typeSelectValue);
     selectedRow = table.rows[0];
     document.getElementById("addDiv").style.display = "none";
-    document.getElementById("removeDiv").style.display = "none";
 
       var addMediaBtn = document.getElementById("addMediaBtn");
 
@@ -40,13 +39,6 @@ function init(mediaList1) {
         addMediaBtn.addEventListener("click", function(){
             showAddMedia();
         });
-
-        setAsHaveTriedBtn.addEventListener("click", function() {
-            setAsHaveTried();
-        });
-       /* removeButton.addEventListener("click", function() {
-                removeSelectedMedia();
-            }); */
 
             changeViewBtn.addEventListener("click", function() {
                                       if(isSimpleView) {
@@ -71,7 +63,6 @@ tableDiv = document.getElementById("mediaTableDiv");
     generateWishlist(haveTriedSelectBool, typeSelectValue);
     selectedRow = table.rows[0];
     document.getElementById("addDiv").style.display = "none";
-    document.getElementById("removeDiv").style.display = "none";
 
       var addMediaBtn = document.getElementById("addMediaBtn");
 
@@ -90,14 +81,6 @@ tableDiv = document.getElementById("mediaTableDiv");
         addMediaBtn.addEventListener("click", function(){
             showAddMedia();
         });
-
-        setAsHaveTriedBtn.addEventListener("click", function() {
-            setAsHaveTried();
-        });
-       /* removeButton.addEventListener("click", function() {
-                removeSelectedMedia();
-            }); */
-
             changeViewBtn.addEventListener("click", function() {
                                       if(isSimpleView) {
                                         generateMediaTableAlt(typeSelectValue, haveTriedSelectBool);
@@ -365,10 +348,6 @@ function typeSelectFunc() {
 }
 
 function showAddMedia() {
-document.getElementById("haveTriedFormInput").value = "test";
-     document.getElementById("mediaNameInput").value = "testi";
-     console.log(document.getElementById("mediaNameInput").value + " hello hello");
-
 if(document.getElementById("addDiv").style.display == "block") {
     document.getElementById("addDiv").style.display = "none";
 }else {
@@ -378,34 +357,10 @@ if(document.getElementById("addDiv").style.display == "block") {
 
 
 }
-function addRowToDB() {
-
+function addRowToDB() {//fix names
         var myForm = document.getElementById("myForm");
-
-        /* document.getElementById("nameInput").value = selectedRow.children[0].innerHTML;
-        document.getElementById("typeInput").value = selectedRow.children[1].innerHTML;
-        document.getElementById("linkInput").value = selectedRow.children[2].innerHTML;
-        document.getElementById("dateInput").value = selectedRow.children[3].innerHTML;
-        document.getElementById("haveTriedInput").value = selectedRow.children[4].innerHTML;
-        document.getElementById("ratingInput").value = selectedRow.children[5].innerHTML; */
               myForm.submit();
 }
-function removeSelectedMedia() {
-var removeForm = document.getElementById("removeForm");
-document.getElementById("mediaNameInput").value = selectedRow.children[0].innerText;
-
-removeForm.submit();
-}
-
-function setAsHaveTried() {
- var myForm = document.getElementById("haveTriedForm");
-         document.getElementById("haveTriedFormInput").value = selectedRow.children[0].innerText;
-
-        myForm.action = "/haveTried"; //do i need this
-              myForm.submit();
-
-}
-
 //stole this from the internet
 function sortTable(n) {
     var rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;

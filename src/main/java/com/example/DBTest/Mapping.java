@@ -183,8 +183,7 @@ public class Mapping {
        // System.out.println(mediaName);
         for(int i = 0; i < mediaList.length; i++) {
             if(mediaList[i].name.equals(mediaName)) {
-                mediaList[i].haveTried = true; //problem is file is not updated right now
-                System.out.println("test " + mediaList[i].name);
+                mediaList[i].haveTried = true;
             }
         }
         updateList();
@@ -214,21 +213,9 @@ public class Mapping {
 
     }
 
-
-    @GetMapping("/file")
-    public String fileHome(Model model) {
-        readFromFile();
-        model.addAttribute("media", new Media());
-
-            model.addAttribute("mediaList", mediaList);
-
-
-        return "file";
-    }
     @GetMapping("/wishlist")
     public String aasdsdfsaaaaa( Model model) {
         readFromWishlist();
-
 
         model.addAttribute("media", new Media());
         model.addAttribute("wishlist", wishlist);
@@ -248,11 +235,6 @@ public class Mapping {
 
         return "list";
     }
-    @GetMapping("/frontpage")
-    public String aaaaa( Model model) {
-       // model.addAttribute("media", new Media());
-        return "frontpage";
-    }
     @GetMapping("/media{mediaName}")
     public String aasdaaaaa( Model model, @RequestParam String mediaName) {
         Media media = null;
@@ -269,14 +251,32 @@ public class Mapping {
         model.addAttribute("media", media);
         model.addAttribute("mediaList", mediaList);
         return "media";
+    } //
+
+    @GetMapping("/list/removeMedia{mediaName}")
+    public String aasdaaadfgdfgaa( Model model, @RequestParam String mediaName) {
+        removeMedia(mediaName);
+        readFromFile();
+
+        model.addAttribute("media", new Media());
+
+        model.addAttribute("mediaList", mediaList);
+
+        return "list";
+    }
+    @GetMapping("/list/haveTried{mediaName}")
+    public String aasdaaadfgdfdsgdgfgaa( Model model, @RequestParam String mediaName) {
+        setMediaAsHaveTried(mediaName);
+        readFromFile();
+
+        model.addAttribute("media", new Media()); //do we need this?
+
+        model.addAttribute("mediaList", mediaList);
+
+        return "list";
     }
 
-
-
-
-
-
-    @PostMapping("/list/addMedia1")
+    @PostMapping("/list/addMedia1")//fix name
     public String addMedia(@ModelAttribute Media media,  Model model) {
 
         model.addAttribute("media", media);
@@ -289,52 +289,4 @@ public class Mapping {
 
         return "list";
     }
-    @PostMapping("/list{removeMedia}")
-    public String addMedia123(@ModelAttribute Media media,  Model model, @RequestParam String removeMedia) {
-
-        model.addAttribute("media", media);
-        removeMedia(media.name);
-
-
-        readFromFile();
-
-        model.addAttribute("mediaList", mediaList);
-
-
-        return "list";
-    }
-    @PostMapping("/removeMedia")
-    public String removeMedia(@ModelAttribute Media media,  Model model) {
-        System.out.println("name = " +  media.name);
-
-        removeMedia(media.name);
-
-        model.addAttribute("media", media); //do we need this?
-
-
-        readFromFile();
-
-        model.addAttribute("mediaList", mediaList);
-
-
-        return "list";
-    }
-    @PostMapping("/haveTried")
-    public String setMediaAsHaveTried(@ModelAttribute Media media,  Model model) {
-
-        setMediaAsHaveTried(media.name);
-
-        model.addAttribute("media", media); //do we need this?
-
-
-        readFromFile();
-
-        model.addAttribute("mediaList", mediaList);
-
-        printMediaList();
-        return "list";
-    }
-
-
-
 }

@@ -1,5 +1,5 @@
 name,type,link,date,haveTried,rating
-robocop,movie,youtube.com,1999-06-01,false,-1
+robocop,movie,youtube.com,1999-06-01,true,-1
 the office,tvShow,netlix.com,2011,true,2
 blueberry pie,baking,Baking book,2022-01-04,true,3
 hamburger,cooking,burgers.com,2022-05-05,true,2
@@ -14,5 +14,3 @@ Alien,movie,movie.com,2021-01-02,true,2
 Pulp Fiction,movie,movie.com,2021-01-02,true,2
 Minecraft,game,mojang.com,2021-03-02,true,2
 patriot,tvShow,asdfs,2022-04-02,true,3
-asdasf,game,projectBleeBloo,2022-04-03,false,0
-tesasd,game,projectBleeBloo,,false,0

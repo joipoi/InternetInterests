@@ -2,89 +2,90 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <!-- <link  rel="stylesheet" href="../static/stylesheet.css" />
  <script type="text/javascript" src="../static/script.js"></script> -->
-<link th:href="@{/stylesheet.css?version=53}" rel="stylesheet" />
+<link th:href="@{/stylesheet.css?version=53}" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script type="text/javascript" th:src="@{/script.js?Num=2}"></script>
+<script type="text/javascript" th:src="@{/script.js?Num=3}"></script>
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 
-<header>  <a th:href="@{/frontpage}">  </a>
-    <a th:href="@{/list(type='movie')}"> <button class="button1">Movie </button> </a>
-    <a th:href="@{/list(type='tvShow')}"> <button class="button1">TvShow </button> </a>
-    <a th:href="@{/list(type='book')}"> <button class="button1">Book </button> </a>
-    <a th:href="@{/list(type='manga')}"> <button class="button1">Manga </button> </a>
-    <a th:href="@{/list(type='baking')}"> <button class="button1">Baking </button> </a>
-    <a th:href="@{/list(type='cooking')}"> <button class="button1">Cooking </button> </a>
-    <a th:href="@{/list(type='game')}"> <button class="button1">Game </button> </a>
-
-    <a th:href="@{/wishlist}"> <button class="button1">WishList </button> </a>
-
+<header>
+    <a th:href="@{/list(type='movie')}">
+        <button class="button1">Movie</button>
+    </a>
+    <a th:href="@{/list(type='tvShow')}">
+        <button class="button1">TvShow</button>
+    </a>
+    <a th:href="@{/list(type='book')}">
+        <button class="button1">Book</button>
+    </a>
+    <a th:href="@{/list(type='manga')}">
+        <button class="button1">Manga</button>
+    </a>
+    <a th:href="@{/list(type='baking')}">
+        <button class="button1">Baking</button>
+    </a>
+    <a th:href="@{/list(type='cooking')}">
+        <button class="button1">Cooking</button>
+    </a>
+    <a th:href="@{/list(type='game')}">
+        <button class="button1">Game</button>
+    </a>
+    <a th:href="@{/wishlist}">
+        <button class="button1">WishList</button>
+    </a>
 </header>
 <body>
-<div id="mediaTableDiv">
-<table id="mediaTable">
-</table>
-</div>
-<div id="sideDiv">
-    <div id="addDiv">
-        <form action="#" th:action="@{/list/addMedia1}" th:object="${media}"  method="post" id="myForm">
-            <label>Name:</label>
-            <input  id="nameInput"  th:field="*{name}">
-            <label>Type:</label>
-            <input  id="typeInput" th:field="*{type}"  >
-            <label>Link:</label>
-            <input id="linkInput" th:field="*{link}" >
-            <label>Date:</label>
-            <input  id="dateInput" th:field="*{stringDate}" >
-            <label>HaveTried:</label>
-            <input  id="haveTriedInput" th:field="*{haveTried}">
-            <label>Rating:</label>
-            <input  id="ratingInput" th:field="*{rating}">
+    <div id="mediaTableDiv">
+        <table id="mediaTable">
+        </table>
+    </div> <!-- #mediaTableDiv -->
+    <div id="sideDiv">
+        <div id="addDiv">
+            <form action="#" th:action="@{/list/addMedia1}" th:object="${media}" method="post" id="myForm">
+                <label>Name:</label>
+                <input id="nameInput" th:field="*{name}">
+                <label>Type:</label>
+                <input id="typeInput" th:field="*{type}">
+                <label>Link:</label>
+                <input id="linkInput" th:field="*{link}">
+                <label>Date:</label>
+                <input id="dateInput" th:field="*{stringDate}">
+                <label>HaveTried:</label>
+                <input id="haveTriedInput" th:field="*{haveTried}">
+                <label>Rating:</label>
+                <input id="ratingInput" th:field="*{rating}">
 
-            <button id="submitMediaBtn"  class="button1" >Submit Media</button>
-        </form>
-    </div>
-    <div id="removeDiv">  <!-- bad name fix also not use atm -->
-        <form action="#" th:action="@{/list(removeMedia='test')}" th:object="${media}"  method="post" id="removeForm">
-            <input  id="mediaNameInput"  th:field="*{name}">
+                <button id="submitMediaBtn" class="button1">Submit Media</button>
+            </form>
+        </div> <!-- #addDiv -->
 
-        </form>
-    </div>
+        <select name="haveSeen" id="haveSeenSelect" class="select1" onchange="haveSeenSelectFunc()">
+            <option value="all">show all media</option>
+            <option value="past">show past media</option>
+            <option value="future">show future media</option>
+        </select>
 
-    <div id="haveTriedDiv">
-        <form action="#" th:action="@{/haveTried}" th:object="${media}"  method="post" id="haveTriedForm">
-            <input  id="haveTriedFormInput"  th:field="*{name}">
+        <select name="type" id="typeSelect" class="select1" onchange="typeSelectFunc()">
+            <option value="all">all</option>
+            <option value="movie">movie</option>
+            <option value="game">game</option>
+            <option value="music">music</option>
+            <option value="tvShow">tvshow</option>
+            <option value="baking">baking</option>
+            <option value="cooking">cooking</option>
+            <option value="manga">manga</option>
+            <option value="book">book</option>
+        </select>
 
-        </form>
-    </div>
+        <button id="addMediaBtn" class="button1">Add media</button>
+        <button id="removeMediaBtn" class="button1">Remove selected media</button>
+        <button id="haveTriedBtn" class="button1">Set Media as "haveTried"</button>
 
-    <select name="haveSeen" id="haveSeenSelect" class="select1" onchange="haveSeenSelectFunc()">
-        <option value="all">show all media</option>
-        <option value="past">show past media</option>
-        <option value="future">show future media</option>
-    </select>
-
-    <select name="type" id="typeSelect" class="select1" onchange="typeSelectFunc()">
-        <option value="all">all</option>
-        <option value="movie">movie</option>
-        <option value="game">game</option>
-        <option value="music">music</option>
-        <option value="tvShow">tvshow</option>
-        <option value="baking">baking</option>
-        <option value="cooking">cooking</option>
-        <option value="manga">manga</option>
-        <option value="book">book</option>
-    </select>
-
-    <button id="addMediaBtn" class="button1">Add media</button>
-    <button id="removeMediaBtn"  class="button1">Remove selected media</button>
-    <button id="haveTriedBtn"  class="button1">Set Media as "haveTried"</button>
-
-    <button id="changeViewBtn"  class="button1"> change view</button>
-    <button id="wishlistBtn"  class="button1"> Add to wishlist</button>
-</div>
+        <button id="changeViewBtn" class="button1"> change view</button>
+        <button id="wishlistBtn" class="button1"> Add to wishlist</button>
+    </div> <!-- #sideDiv -->
 
 <script th:inline="javascript">
       var nameJs = /*[[${mediaList}]]*/;
@@ -97,13 +98,14 @@
 
         document.getElementById("removeMediaBtn").addEventListener("click", function() {
          selectedRowText = getSelectedRowText();
-                document.getElementById("removeForm").action = "/list?removeMedia=" +selectedRowText;
-                removeSelectedMedia();
-
+                window.location.replace("/list/removeMedia?mediaName=" +selectedRowText);
             });
 
-
-      </script>
+        document.getElementById("haveTriedBtn").addEventListener("click", function() {
+         selectedRowText = getSelectedRowText();
+                window.location.replace("/list/haveTried?mediaName=" +selectedRowText);
+            });
+</script>
 </body>
 </html>
 
