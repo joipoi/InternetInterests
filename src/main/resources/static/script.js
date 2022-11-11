@@ -5,94 +5,47 @@ var haveTriedSelectBool;
 var typeSelectValue
 var tableDiv;
 var isSimpleView = true;
-var wishlist;
 
 
 function init(mediaList1) {
+localStorage.setItem("init", "init");
     tableDiv = document.getElementById("mediaTableDiv");
     table = document.getElementById("mediaTable");
     mediaList = mediaList1;
-    console.log(mediaList);
-
-
 
     haveTriedSelectBool = document.getElementById("haveSeenSelect").value;
     typeSelectValue = document.getElementById("typeSelect").value;
-    generateMediaTable(haveTriedSelectBool, typeSelectValue);
-    selectedRow = table.rows[0];
+
     document.getElementById("addDiv").style.display = "none";
 
-      var addMediaBtn = document.getElementById("addMediaBtn");
+    var addMediaBtn = document.getElementById("addMediaBtn");
 
-        var submitMediaBtn = document.getElementById("submitMediaBtn");
+    var submitMediaBtn = document.getElementById("submitMediaBtn");
 
-        var setAsHaveTriedBtn = document.getElementById("haveTriedBtn");
+    var setAsHaveTriedBtn = document.getElementById("haveTriedBtn");
 
-        var removeButton = document.getElementById("removeMediaBtn");
+    var removeButton = document.getElementById("removeMediaBtn");
 
-        var changeViewBtn = document.getElementById("changeViewBtn")
+    var changeViewBtn = document.getElementById("changeViewBtn")
 
-        submitMediaBtn.addEventListener("click", function(){
-                              addRowToDB();
-                          });
+    submitMediaBtn.addEventListener("click", function(){
+        addRowToDB();
+    });
 
-        addMediaBtn.addEventListener("click", function(){
-            showAddMedia();
-        });
+    if(addMediaBtn != null) {
+    addMediaBtn.addEventListener("click", function(){
+        showAddMedia();
+    });
+    }
 
-            changeViewBtn.addEventListener("click", function() {
-                                      if(isSimpleView) {
-                                        generateMediaTableAlt(typeSelectValue, haveTriedSelectBool);
-                                      }else {
-                                        generateMediaTable(typeSelectValue, haveTriedSelectBool);
-                                      }
-                                  });
-
-
-
+    changeViewBtn.addEventListener("click", function() {
+        if(isSimpleView) {
+            generateMediaTableAlt(typeSelectValue, haveTriedSelectBool);
+        }else {
+            generateMediaTable(typeSelectValue, haveTriedSelectBool);
+        }
+    });
 }
-function initWishlist(wishlist1) {
-tableDiv = document.getElementById("mediaTableDiv");
-    table = document.getElementById("mediaTable");
-    wishlist = wishlist1;
-
-
-
-    haveTriedSelectBool = document.getElementById("haveSeenSelect").value;
-    typeSelectValue = document.getElementById("typeSelect").value;
-    generateWishlist(haveTriedSelectBool, typeSelectValue);
-    selectedRow = table.rows[0];
-    document.getElementById("addDiv").style.display = "none";
-
-      var addMediaBtn = document.getElementById("addMediaBtn");
-
-        var submitMediaBtn = document.getElementById("submitMediaBtn");
-
-        var setAsHaveTriedBtn = document.getElementById("haveTriedBtn");
-
-        var removeButton = document.getElementById("removeMediaBtn");
-
-        var changeViewBtn = document.getElementById("changeViewBtn")
-
-        submitMediaBtn.addEventListener("click", function(){
-                              addRowToDB();
-                          });
-
-        addMediaBtn.addEventListener("click", function(){
-            showAddMedia();
-        });
-            changeViewBtn.addEventListener("click", function() {
-                                      if(isSimpleView) {
-                                        generateMediaTableAlt(typeSelectValue, haveTriedSelectBool);
-                                      }else {
-                                        generateMediaTable(typeSelectValue, haveTriedSelectBool);
-                                      }
-                                  });
-
-
-
-}
-
 
 //simple media list with table view
 function generateMediaTable(typeSelect, haveTriedSelect) {
@@ -250,15 +203,15 @@ if(typeSelect == "" || typeSelect == null) {
         //here we make html elements
 
 
-    for(var row = 0; row < wishlist.length; row++) {
+    for(var row = 0; row < mediaList.length; row++) {
 
-        if( (wishlist[row].type == typeSelect || allTypes) && (wishlist[row].haveTried == haveTriedSelect || allHaveTried)) {
+        if( (mediaList[row].type == typeSelect || allTypes) && (mediaList[row].haveTried == haveTriedSelect || allHaveTried)) {
             var mediaDiv = document.createElement('div');
             var innerHtmlString = "";
 
-            innerHtmlString += '<div class="mediaDiv"> <img src="' + getImgSrc(wishlist[row]) +  '"  width="150" height="225"> <p>' + wishlist[row].name +  '</p>';
+            innerHtmlString += '<div class="mediaDiv"> <img src="' + getImgSrc(mediaList[row]) +  '"  width="150" height="225"> <p>' + mediaList[row].name +  '</p>';
 
-            innerHtmlString += generateStarsFromRating(wishlist[row].rating);
+            innerHtmlString += generateStarsFromRating(mediaList[row].rating);
 
             innerHtmlString += '</div>';
 
@@ -308,6 +261,7 @@ var imgSrc;
 
 function haveSeenSelectFunc() {
     var haveSeenSelectValue = document.getElementById("haveSeenSelect").value;
+      localStorage.setItem("haveSeenSelect",haveSeenSelectValue );
 
     if(haveSeenSelectValue == "all") {
     haveTriedSelectBool = "all";
@@ -337,6 +291,7 @@ function haveSeenSelectFunc() {
 }
 function typeSelectFunc() {
     typeSelectValue = document.getElementById("typeSelect").value;
+     localStorage.setItem("typeSelect",typeSelectValue );
 
     if(isSimpleView) {
     generateMediaTable(typeSelectValue, haveTriedSelectBool);
@@ -418,8 +373,10 @@ function sortTable(n) {
 
 function setAsSelected(rowObj) {
 
-    selectedRow.style.backgroundColor = "white";
+if(selectedRow != null) {
 
+    selectedRow.style.backgroundColor = "white";
+}
     selectedRow = rowObj;
     selectedRow.style.backgroundColor = "#997f7d";
 }

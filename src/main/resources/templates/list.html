@@ -105,6 +105,11 @@
          selectedRowText = getSelectedRowText();
                 window.location.replace("/list/haveTried?mediaName=" +selectedRowText);
             });
+
+             document.getElementById("wishlistBtn").addEventListener("click", function() {
+         selectedRowText = getSelectedRowText();
+                window.location.replace("/list/addToWishlist?mediaName=" +selectedRowText);
+            });
 </script>
 </body>
 </html>
