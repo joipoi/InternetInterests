@@ -2,30 +2,51 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <!-- <link  rel="stylesheet" href="../static/stylesheet.css" />
  <script type="text/javascript" src="../static/script.js"></script> -->
-<link th:href="@{/stylesheet.css?version=52}" rel="stylesheet" />
+<link th:href="@{/stylesheet.css?version=55}" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script type="text/javascript" th:src="@{/script.js}"></script>
+<script type="text/javascript" th:src="@{/script.js?Num=3}"></script>
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 
-<header> HEADER HERE  <a th:href="@{/frontpage}"> <button>frontpage </button> </a></header>
+
+<header>
+    <a th:href="@{/list(type='movie')}">
+        <button class="button1">Movie</button>
+    </a>
+    <a th:href="@{/list(type='tvShow')}">
+        <button class="button1">TvShow</button>
+    </a>
+    <a th:href="@{/list(type='book')}">
+        <button class="button1">Book</button>
+    </a>
+    <a th:href="@{/list(type='manga')}">
+        <button class="button1">Manga</button>
+    </a>
+    <a th:href="@{/list(type='baking')}">
+        <button class="button1">Baking</button>
+    </a>
+    <a th:href="@{/list(type='cooking')}">
+        <button class="button1">Cooking</button>
+    </a>
+    <a th:href="@{/list(type='game')}">
+        <button class="button1">Game</button>
+    </a>
+    <a th:href="@{/wishlist}">
+        <button class="button1">WishList</button>
+    </a>
+</header>
 <body>
 <div id="mediaPageDiv">
 
 </div>
 <div id="sideDiv">
-    SIDE DIV HERE
-    <p>testing</p>
-</div>
 
+    <button id="changeViewBtn" class="button1"> Add Description</button>
+    <button id="wishlistBtn" class="button1"> Add Poster</button>
+</div> <!-- #sideDiv -->
 
-
-<footer>
-    <p>FOOTER HERE</p>
-
-</footer>
 <script th:inline="javascript">
 var mediaListJs = /*[[${mediaList}]]*/;
 var mediaJs = /*[[${media}]]*/;

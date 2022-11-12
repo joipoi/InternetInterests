@@ -91,11 +91,7 @@ public class Mapping {
 
     }
 
-    private void printMediaList() {
-        for (Media media:mediaList) {
-            System.out.println(media.toString());
-        }
-    }
+
     private void updateList(String fileName, Media[] list) {
         try {
             FileWriter myWriter = new FileWriter("src/main/resources/" + fileName);
@@ -116,18 +112,21 @@ public class Mapping {
         }
     }
 
+    private void addMediaToFile(String name, String type, String link, String date, boolean haveTried, int rating, String fileName ){
+        String writeString = name +  "," + type +  "," + link +  "," + date +  "," + haveTried +  "," + rating;
+        writeToFile(fileName, writeString);
+    }
 
-
-    private void addMediaToFile(String name, String type, String link, String date, boolean haveTried, int rating, Media[] list, String fileName ){
+    private void writeToFile(String fileName, String... lines) {
         try {
             FileWriter myWriter = new FileWriter("src/main/resources/" + fileName, true);
             BufferedWriter bw = new BufferedWriter(myWriter);
             bw.newLine();
-            String writeString = name +  "," + type +  "," + link +  "," + date +  "," + haveTried +  "," + rating;
-            bw.write(writeString);
+            for (String line : lines) {
+                bw.write(line);
+            }
             bw.close();
             myWriter.close();
-            System.out.println("Wrote to file: " + writeString);
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
@@ -159,7 +158,7 @@ public class Mapping {
         for(int i = 0; i < mediaList.length; i++) {
             if(mediaList[i].name.equals(mediaName)) {
                 addMediaToFile(mediaList[i].name, mediaList[i].type, mediaList[i].link,
-                        mediaList[i].stringDate, mediaList[i].haveTried, mediaList[i].rating, wishlist, "wishlist.csv");
+                        mediaList[i].stringDate, mediaList[i].haveTried, mediaList[i].rating, "wishlist.csv");
 
             }
         }
@@ -185,6 +184,7 @@ public class Mapping {
         }
         updateList("wishlist.csv", wishlist);
     }
+
 
 
     //mappings for list page
@@ -281,7 +281,7 @@ public class Mapping {
     public String addMedia(@ModelAttribute Media media,  Model model) {
 
         model.addAttribute("media", media);
-        addMediaToFile(media.name, media.type, media.link, media.stringDate, media.haveTried, media.rating, mediaList, "mainMedia.csv");
+        addMediaToFile(media.name, media.type, media.link, media.stringDate, media.haveTried, media.rating, "mainMedia.csv");
 
         readFromFile("mainMedia.csv");
 

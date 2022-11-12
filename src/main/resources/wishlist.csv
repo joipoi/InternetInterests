@@ -1,5 +1,4 @@
 name,type,link,date,haveTried,rating
-robocop,movie,youtube.com,1999-06-01,true,-1
-blueberry pie,baking,Baking book,2022-01-04,true,3
-monster,manga,cruncyroll.com,2022-04-05,true,2
 hitchhikers guide to the galaxy,book,aBookStore,2021-01-05,true,3
+robocop,movie,youtube.com,1999-06-01,true,-1
+the office,tvShow,netlix.com,2011,true,2

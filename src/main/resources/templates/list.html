@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <!-- <link  rel="stylesheet" href="../static/stylesheet.css" />
  <script type="text/javascript" src="../static/script.js"></script> -->
-<link th:href="@{/stylesheet.css?version=53}" rel="stylesheet"/>
+<link th:href="@{/stylesheet.css?version=55}" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script type="text/javascript" th:src="@{/script.js?Num=3}"></script>
 <head>
@@ -47,10 +47,19 @@
                 <label>Name:</label>
                 <input id="nameInput" th:field="*{name}">
                 <label>Type:</label>
-                <input id="typeInput" th:field="*{type}">
+                <select  name="typeSelect2"  id="typeSelect2" th:field="*{type}" onchange="">
+                    <option value="movie">movie</option>
+                    <option value="game">game</option>
+                    <option value="music">music</option>
+                    <option value="tvShow">tvshow</option>
+                    <option value="baking">baking</option>
+                    <option value="cooking">cooking</option>
+                    <option value="manga">manga</option>
+                    <option value="book">book</option>
+                </select>
                 <label>Link:</label>
                 <input id="linkInput" th:field="*{link}">
-                <label>Date:</label>
+                <label>ViewedDate:</label>
                 <input id="dateInput" th:field="*{stringDate}">
                 <label>HaveTried:</label>
                 <input id="haveTriedInput" th:field="*{haveTried}">
@@ -92,9 +101,13 @@
       var typeJs = /*[[${type}]]*/;
       var selectedRowText = " ";
 
-        document.onload = document.getElementById("typeSelect").value = typeJs;
+        if(typeJs != null) {
+            document.onload = document.getElementById("typeSelect").value = typeJs;
+            document.onload = localStorage.setItem("typeSelect",typeJs);
+        }
+
         document.onload = init(nameJs);
-        document.onload = generateMediaTableAlt(typeJs, "all");
+        document.onload = generateCorrectMediaList();
 
         document.getElementById("removeMediaBtn").addEventListener("click", function() {
          selectedRowText = getSelectedRowText();

@@ -1,22 +1,33 @@
 var table 
 var selectedRow;
 var mediaList;
-var haveTriedSelectBool;
-var typeSelectValue
+var haveTriedSelect;
+var typeSelect;
 var tableDiv;
-var isSimpleView = true;
+var isSimpleView;
 
 
 function init(mediaList1) {
-localStorage.setItem("init", "init");
     tableDiv = document.getElementById("mediaTableDiv");
     table = document.getElementById("mediaTable");
     mediaList = mediaList1;
 
-    haveTriedSelectBool = document.getElementById("haveSeenSelect").value;
-    typeSelectValue = document.getElementById("typeSelect").value;
 
-    document.getElementById("addDiv").style.display = "none";
+
+    localStorage.setItem("haveSeenSelect","all");
+    localStorage.setItem("typeSelect","all");
+
+
+
+    if(localStorage.getItem("simpleView") == null) {
+         localStorage.setItem("simpleView","true" );
+    }
+
+    if(localStorage.getItem("simpleView") === "true") {
+        isSimpleView = true;
+    }else if(localStorage.getItem("simpleView") === "true") {
+        isSimpleView = false;
+    }
 
     var addMediaBtn = document.getElementById("addMediaBtn");
 
@@ -28,11 +39,14 @@ localStorage.setItem("init", "init");
 
     var changeViewBtn = document.getElementById("changeViewBtn")
 
-    submitMediaBtn.addEventListener("click", function(){
-        addRowToDB();
-    });
+
 
     if(addMediaBtn != null) {
+    submitMediaBtn.addEventListener("click", function(){
+            addRowToDB();
+        });
+
+    document.getElementById("addDiv").style.display = "none";
     addMediaBtn.addEventListener("click", function(){
         showAddMedia();
     });
@@ -40,19 +54,31 @@ localStorage.setItem("init", "init");
 
     changeViewBtn.addEventListener("click", function() {
         if(isSimpleView) {
-            generateMediaTableAlt(typeSelectValue, haveTriedSelectBool);
+            generateMediaTableAlt();
         }else {
-            generateMediaTable(typeSelectValue, haveTriedSelectBool);
+            generateMediaTable();
         }
     });
 }
 
+function generateCorrectMediaList() {
+    if(isSimpleView) {
+                 generateMediaTable();
+            }else {
+                generateMediaTableAlt();
+            }
+}
+
 //simple media list with table view
-function generateMediaTable(typeSelect, haveTriedSelect) {
+function generateMediaTable() {
+    localStorage.setItem("simpleView","true" );
+
+    typeSelect = localStorage.getItem("typeSelect");
+    haveTriedSelect = localStorage.getItem("haveSeenSelect");
+
 
         if(typeSelect == "" || typeSelect == null) {
             typeSelect = "all";
-            typeSelectValue = "all"
         }
         tableDiv.innerHTML = "";
         table = document.createElement('table');
@@ -67,10 +93,14 @@ function generateMediaTable(typeSelect, haveTriedSelect) {
         }
         if(haveTriedSelect == "all") {
             allHaveTried = true;
-        }
+        }else if(haveTriedSelect === "true") {
+            haveTriedSelect = true;
+        }else if(haveTriedSelect === "false") {
+                     haveTriedSelect = false;
+                 }
 
         var tr = document.createElement('tr');
-        tr.innerHTML = '   <th onclick="sortTable(0)">Name</th> <th onclick="sortTable(1)">Type</th>  <th onclick="sortTable(2)">Link</th>  <th onclick="sortTable(3)">Date</th>  <th onclick="sortTable(4)">haveTried</th>  <th onclick="sortTable(5)">Rating</th>';
+        tr.innerHTML = '   <th onclick="sortTable(0)">Name</th> <th onclick="sortTable(1)">Type</th>  <th onclick="sortTable(2)">Link</th>  <th onclick="sortTable(3)">ViewedDate</th>  <th onclick="sortTable(4)">haveTried</th>  <th onclick="sortTable(5)">Rating</th>';
         table.appendChild(tr);
     for(var row = 0; row < mediaList.length; row++) {
 
@@ -94,7 +124,7 @@ function generateMediaTable(typeSelect, haveTriedSelect) {
         type.innerHTML = mediaList[row].type;
         tr.appendChild(type);
         var link = document.createElement('td');
-        link.innerHTML = mediaList[row].link;
+        link.innerHTML = "<a href=" +mediaList[row].link + ">"+ mediaList[row].link +  "</a>";
         tr.appendChild(link);
         var date = document.createElement('td');
         date.innerHTML =  mediaList[row].stringDate;
@@ -112,11 +142,14 @@ function generateMediaTable(typeSelect, haveTriedSelect) {
     isSimpleView = true;
 }
 //media list with images
-function generateMediaTableAlt(typeSelect, haveTriedSelect) {
+function generateMediaTableAlt() {
+localStorage.setItem("simpleView","false");
+
+ typeSelect = localStorage.getItem("typeSelect");
+    haveTriedSelect = localStorage.getItem("haveSeenSelect");
 
 if(typeSelect == "" || typeSelect == null) {
             typeSelect = "all";
-            typeSelectValue = "all"
         }
 
         tableDiv.innerHTML = "";
@@ -129,8 +162,12 @@ if(typeSelect == "" || typeSelect == null) {
             allTypes = true;
         }
         if(haveTriedSelect == "all") {
-            allHaveTried = true;
-        }
+                   allHaveTried = true;
+               }else if(haveTriedSelect === "true") {
+                   haveTriedSelect = true;
+               }else if(haveTriedSelect === "false") {
+                            haveTriedSelect = false;
+                        }
 
 
         //here we make html elements
@@ -163,9 +200,9 @@ if(typeSelect == "" || typeSelect == null) {
 function generateMediaPage(mediaList2, media) {
 var mediaPageDiv = document.getElementById("mediaPageDiv");
 var innerHtmlString = "";
- innerHtmlString += '<div id="mediaBox"> <img src="' + getImgSrc(media) +  '"  width="100%" height="100%"> <p>' + media.name + " " + media.date;
+ innerHtmlString += '<div id="mediaBox"> <img src="' + getImgSrc(media) +  '"  width="100%" height="100%"> <p>' + media.name + "</p> <p>" + media.date + "</p> <p>";
 innerHtmlString += generateStarsFromRating(media.rating);
-innerHtmlString += '</p>  </div>';
+innerHtmlString += " </p> <a href=" +media.link + ">"+ media.link +  "</a>"  + '</div>';
  innerHtmlString += "<div id='mediaTextBox'> <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. </p> </div>"
 
 
@@ -178,52 +215,6 @@ innerHtmlString += '</p>  </div>';
     }
 
 //img(poster), p(name), stars(rating), p(date), p(description), a(link), haveTried(??)
-}
-function generateWishlist(typeSelect, haveTriedSelect) {
-
-if(typeSelect == "" || typeSelect == null) {
-            typeSelect = "all";
-            typeSelectValue = "all"
-        }
-
-        tableDiv.innerHTML = "";
-
-        //this is something
-        var allTypes = false;
-        var allHaveTried = false;
-
-        if(typeSelect == "all") {
-            allTypes = true;
-        }
-        if(haveTriedSelect == "all") {
-            allHaveTried = true;
-        }
-
-
-        //here we make html elements
-
-
-    for(var row = 0; row < mediaList.length; row++) {
-
-        if( (mediaList[row].type == typeSelect || allTypes) && (mediaList[row].haveTried == haveTriedSelect || allHaveTried)) {
-            var mediaDiv = document.createElement('div');
-            var innerHtmlString = "";
-
-            innerHtmlString += '<div class="mediaDiv"> <img src="' + getImgSrc(mediaList[row]) +  '"  width="150" height="225"> <p>' + mediaList[row].name +  '</p>';
-
-            innerHtmlString += generateStarsFromRating(mediaList[row].rating);
-
-            innerHtmlString += '</div>';
-
-        mediaDiv.innerHTML = innerHtmlString;
-        mediaDiv.addEventListener("click", function() {
-        var name = this.getElementsByTagName('p')[0].innerHTML;
-                    window.location.replace("media?mediaName=" + name);
-                 });
-
-        tableDiv.appendChild(mediaDiv);
-        }
-    }
 }
 
 function generateStarsFromRating(rating) {
@@ -258,48 +249,48 @@ var imgSrc;
 
          return imgSrc;
 }
+function getDescription(mediaName) {
+var description;
+ switch(mediaName) {
+                case 'robocop':
+                    imgSrc = "/images/robocop.jpg";
+                    break;
+                case "Alien":
+                    imgSrc = "/images/alien.jpg"
+                    break;
+                default:
+                description = "no description found"
+            }
+
+         return description;
+}
 
 function haveSeenSelectFunc() {
     var haveSeenSelectValue = document.getElementById("haveSeenSelect").value;
-      localStorage.setItem("haveSeenSelect",haveSeenSelectValue );
 
     if(haveSeenSelectValue == "all") {
-    haveTriedSelectBool = "all";
-     if(isSimpleView) {
-        generateMediaTable(typeSelectValue, haveTriedSelectBool);
-        } else {
-        generateMediaTableAlt(typeSelectValue, haveTriedSelectBool);
-        }
+    localStorage.setItem("haveSeenSelect",haveSeenSelectValue );
     }else if(haveSeenSelectValue == "past") {
-    haveTriedSelectBool = true;
-          if(isSimpleView) {
-             generateMediaTable(typeSelectValue, true);
-             } else {
-             generateMediaTableAlt(typeSelectValue, true);
-             }
+         localStorage.setItem("haveSeenSelect",true );
     }else if(haveSeenSelectValue == "future") {
-    haveTriedSelectBool = false;
-            if(isSimpleView) {
-               generateMediaTable(typeSelectValue, false);
-               } else {
-               generateMediaTableAlt(typeSelectValue, false);
-               }
+    localStorage.setItem("haveSeenSelect",false );
          }
-
-
-
+     if(isSimpleView) {
+         generateMediaTable();
+         } else {
+         generateMediaTableAlt();
+         }
 }
 function typeSelectFunc() {
-    typeSelectValue = document.getElementById("typeSelect").value;
-     localStorage.setItem("typeSelect",typeSelectValue );
+    typeSelect = document.getElementById("typeSelect").value;
+    console.log(typeSelect);
+     localStorage.setItem("typeSelect",typeSelect);
 
     if(isSimpleView) {
-    generateMediaTable(typeSelectValue, haveTriedSelectBool);
+    generateMediaTable();
     } else {
-    generateMediaTableAlt(typeSelectValue, haveTriedSelectBool);
+    generateMediaTableAlt();
     }
-
-
 }
 
 function showAddMedia() {
@@ -385,10 +376,10 @@ function getSelectedRowText() {
 
 return selectedRow.children[0].innerText;
 }
+/*
+function setLocalStorage(String key, String value) {
 
-function setAsSelectedDiv() {
-
-}
+} */
 
 //todo let user change database for example mark media as "havetried".
 //todo make the table have a maxHeight so you scroll in a box instead of having to scroll the whole page.

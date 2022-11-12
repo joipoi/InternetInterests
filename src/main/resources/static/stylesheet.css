@@ -1,14 +1,36 @@
+ /*Every page */
 body{
  margin: 0;
  margin-left: 10px;
  background-color: #ff;
-
  }
-p {
-margin: 0;
-}
+ header{
+ background-color: #233257;
+ height:60px;
+     top: 0;
+ }
+ #sideDiv{
+ background-color: #233257;
+  height:1000px;
+ width:20%;
+      float:right;
+      position: relative;
+ }
+ .button1 {
+   background-color: #4CAF50; /* Green */
+   border: none;
+   color: white;
+   padding: 15px 32px;
+   text-align: center;
+   text-decoration: none;
+   display: inline-block;
+   font-size: 16px;
+   margin: 4px 2px;
+   cursor: pointer;
+ }
+
+ /*list or wishlist page */
 #mediaTable {
-    color:blue;
     width: 100%;
 }
 #mediaTable td, #ingredientsTable th {
@@ -31,79 +53,15 @@ margin: 0;
     border:solid;
     padding:10px;
 }
-#haveTriedDiv {
- display: none;
-}
-#haveTriedFormInput{
-display: none;
-}
-#removeDiv{
-display: none;
-}
-footer{
-background-color: #bfbcb2;
-height:60px;
-    bottom: 0;
-    clear: both;
-}
-header{
-background-color: #233257;
-height:60px;
-    top: 0;
-}
-#sideDiv{
-background-color: #233257;
- height:1000px;
-width:20%;
-     float:right;
-     position: relative;
 
 
-}
 #mediaTableDiv{
 width:68%;
     float:left;
     position:relative;
 }
-.mediaDiv{
-float:left;
-width:20%;
-height:33%;
-cursor: pointer;
-}
 .checked {
   color: orange;
-}
-#mediaPageDiv {
-width:68%;
-float:left;
-    position:relative;
-}
-#mediaBox {
-float:left;
-width:40%;
-}
-#mediaTextBox{
-float:left;
-width:50%;
- margin-left:4%;
-}
-.button1 {
-  background-color: #4CAF50; /* Green */
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-
-
-}
-#haveSeenSelect{
-
 }
 .select1{
  background-color: #0563af;
@@ -112,33 +70,49 @@ width:50%;
   width: 250px;
   border: none;
   font-size: 20px;
-  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
-  -webkit-appearance: button;
-  appearance: button;
-  outline: none;
 }
-#myForm {
-font: 13px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+#typeSelect2{
+	width:70%;
+}
+#myForm label{
+	display:block;
+	  color: white;
+  font-size: 20px;
+}
+#myForm input, select{
+	padding: 7px;
+	width:60%;
 }
 
-#myForm label{
-margin:0 0 3px 0;
-	padding:0px;
-	display:block;
-	font-weight: bold;
+
+/* media page */
+.mediaDiv{
+float:left;
+width:20%;
+height:33%;
+cursor: pointer;
 }
-#myForm input{
-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	border:1px solid #BEBEBE;
-	padding: 7px;
-	margin:0px;
-	-webkit-transition: all 0.30s ease-in-out;
-	-moz-transition: all 0.30s ease-in-out;
-	-ms-transition: all 0.30s ease-in-out;
-	-o-transition: all 0.30s ease-in-out;
-	outline: none;
+#mediaPageDiv {
+width:68%;
+float:left;
+    position:relative;
 }
+
+#mediaBox { /* this element gets created in javascript, probably bad practise */
+float:left;
+width:40%;
+}
+#mediaBox p, #mediaBox a{
+  border: none;
+  font-size: 30px;
+}
+
+#mediaTextBox{  /* this element gets created in javascript, probably bad practise */
+float:left;
+width:50%;
+ margin-left:4%;
+}
+
+
 
 
