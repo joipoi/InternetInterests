@@ -149,6 +149,7 @@ public class Mapping {
         for(int i = 0; i < mediaList.length; i++) {
             if(mediaList[i].name.equals(mediaName)) {
                 mediaList = removeFromArray(i, mediaList);
+                removeFromWishlist(mediaName);
             }
         }
         updateList("mainMedia.csv", mediaList);

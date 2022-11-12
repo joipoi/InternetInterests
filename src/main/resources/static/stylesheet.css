@@ -89,8 +89,10 @@ width:68%;
 .mediaDiv{
 float:left;
 width:20%;
-height:33%;
+height:350px;
 cursor: pointer;
+white-space: nowrap;
+  overflow: hidden;
 }
 #mediaPageDiv {
 width:68%;
@@ -111,8 +113,16 @@ width:40%;
 float:left;
 width:50%;
  margin-left:4%;
+	    font-family: Poppins,Helvetica,sans-serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    letter-spacing: .8px;
+    line-height: 1.6;
 }
-
+#wishListLink{
+margin-left:260px;
+width:250px;
+}
 
 
 

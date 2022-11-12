@@ -2,9 +2,9 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <!-- <link  rel="stylesheet" href="../static/stylesheet.css" />
  <script type="text/javascript" src="../static/script.js"></script> -->
-<link th:href="@{/stylesheet.css?version=55}" rel="stylesheet"/>
+<link th:href="@{/stylesheet.css?version=60}" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script type="text/javascript" th:src="@{/script.js?Num=3}"></script>
+<script type="text/javascript" th:src="@{/script.js?Num=7}"></script>
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -33,7 +33,7 @@
         <button class="button1">Game</button>
     </a>
     <a th:href="@{/wishlist}">
-        <button class="button1">WishList</button>
+        <button id="wishListLink" class="button1">WishList</button>
     </a>
 </header>
 <body>
@@ -101,12 +101,13 @@
       var typeJs = /*[[${type}]]*/;
       var selectedRowText = " ";
 
+        document.onload = init(nameJs);
         if(typeJs != null) {
             document.onload = document.getElementById("typeSelect").value = typeJs;
             document.onload = localStorage.setItem("typeSelect",typeJs);
         }
 
-        document.onload = init(nameJs);
+
         document.onload = generateCorrectMediaList();
 
         document.getElementById("removeMediaBtn").addEventListener("click", function() {

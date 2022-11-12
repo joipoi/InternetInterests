@@ -1,9 +1,18 @@
 name,type,link,date,haveTried,rating
-robocop,movie,youtube.com,1999-06-01,true,-1
-the office,tvShow,netlix.com,2011,true,2
-monster,manga,cruncyroll.com,2022-04-05,true,2
-hitchhikers guide to the galaxy,book,aBookStore,2021-01-05,true,3
-patriot,tvShow,asdfs,2022-04-02,true,3
-Barry,tvShow,abc.com,2022-04-03,false,0
-dfhgdhfdhfghfbcb,game,projectBleeBloo,2022-04-03,false,0
-testgdfhdf,movie,a,2022-04-03,false,0
+Robocop,movie,https://www.playpilot.com/se/movie/robocop/,,false,-1
+Alien,movie,https://www.playpilot.com/se/movie/alien-1979/,,false,-1
+MONTY PYTHONS FLYGANDE CIRKUS,movie,https://www.playpilot.com/se/show/monty-pythons-flying-circus/,2006-04-05,true,2
+COMMUNITY,tvShow,https://www.playpilot.com/se/show/community/,2009-04-07,true,3
+Barry,tvShow,https://www.playpilot.com/se/show/barry-2018-series/,,false,-1
+Harry Potter and the Philosopher's Stone ,book,https://www.playpilot.com/se/show/barry-2018-series/,2005-03-06,true,2
+1984,book,https://openlibrary.org/works/OL1168083W/Nineteen_Eighty-Four?edition=ia%3Anineteeneightyfo0000unse_t8z6,,false,-1
+Skyrim,game,https://store.steampowered.com/app/489830/The_Elder_Scrolls_V_Skyrim_Special_Edition/,,false,-1
+Noita,game,https://store.steampowered.com/app/881100/Noita/,2022-10-03,true,1
+Run The Jewels,music,https://www.youtube.com/watch?v=bMPJttPJUZ8,2022-11-10,true,2
+Louis Cole,music,https://www.youtube.com/watch?v=glgPZmSwC4M&list=RDMM&start_radio=1&rv=bMPJttPJUZ8,2022-09-02,true,1
+Ice Cream,baking,https://cooking.nytimes.com/recipes/1016626-salted-caramel-ice-cream,,false,-1
+Kanelbulle,baking,https://www.ica.se/recept/kanelbullar-5342/,2009-03-04,true,3
+Fläskfile,cooking,https://www.mathem.se/recept/helstekt-flaskytterfile-med-krossad-potatis-och-ortsmor,2022-01-02,true,2
+Sushi,cooking,https://www.google.com/search?q=sushi&oq=sushi&aqs=chrome..69i57.640j0j4&sourceid=chrome&ie=UTF-8,,false,-1
+Berserk,manga,https://www.anime-planet.com/manga/berserk,2022-04-02,true,1
+Solo Leveling,manga,https://www.anime-planet.com/manga/solo-leveling,,false,-1

@@ -133,7 +133,12 @@ function generateMediaTable() {
         haveTried.innerHTML = mediaList[row].haveTried;
         tr.appendChild(haveTried);
         var rating = document.createElement('td');
-        rating.innerHTML = mediaList[row].rating;
+        if(mediaList[row].rating == -1) {
+           rating.innerHTML = ""
+        }else{
+            rating.innerHTML = mediaList[row].rating;
+        }
+
         tr.appendChild(rating);
 
         table.appendChild(tr)
@@ -203,7 +208,7 @@ var innerHtmlString = "";
  innerHtmlString += '<div id="mediaBox"> <img src="' + getImgSrc(media) +  '"  width="100%" height="100%"> <p>' + media.name + "</p> <p>" + media.date + "</p> <p>";
 innerHtmlString += generateStarsFromRating(media.rating);
 innerHtmlString += " </p> <a href=" +media.link + ">"+ media.link +  "</a>"  + '</div>';
- innerHtmlString += "<div id='mediaTextBox'> <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. </p> </div>"
+ innerHtmlString += "<div id='mediaTextBox'> <p>" + getDescription(media.name) +  "</p> </div>"
 
 
  mediaPageDiv.innerHTML += innerHtmlString;
@@ -234,15 +239,36 @@ return htmlStarString;
 
 }
 
+//the image icons are hardcoded because I don't have a database for images. would not look like this in production
 function getImgSrc(media) {
 var imgSrc;
  switch(media.name) {
-                case 'robocop':
+                case 'Robocop':
                     imgSrc = "/images/robocop.jpg";
                     break;
                 case "Alien":
                     imgSrc = "/images/alien.jpg"
                     break;
+                case "Skyrim":
+                      imgSrc = "/images/skyrim.jpg"
+                      break;
+                case '1984':
+                     imgSrc = "/images/1984.jpg";
+                     break;
+                case "Berserk":
+                     imgSrc = "/images/berserk.jpg"
+                      break;
+                case "COMMUNITY":
+                      imgSrc = "/images/community.jpg"
+                      break;
+                case "Ice Cream":
+                      imgSrc = "/images/IceCream.jpg"
+                       break;
+                case "Sushi":
+                      imgSrc = "/images/sushi.jpg"
+                      break;
+
+
                 default:
                 imgSrc = "/images/" + media.type + ".jpg"
             }
@@ -252,12 +278,30 @@ var imgSrc;
 function getDescription(mediaName) {
 var description;
  switch(mediaName) {
-                case 'robocop':
-                    imgSrc = "/images/robocop.jpg";
+                case 'Robocop':
+                    description = "I ett framtida Detroit är kriminaliteten extrem. Polisen har privatiserats och ägs av företaget OCP, som lanserar ett nytt vapen mot skurkarna: en polisrobot. När polismannen Alex Murphy har mördats av ett gatugäng får hans kropp ett skal av stål. Resultatet blir Robocop, som gör succé som brottsbekämpare. Men hans framgång gör att superskurken Boddicker måste göra allt för att röja honom ur vägen.Land: USA Robocop är en sci-fi-, action- och thrillerfilm producerad i USA och släpptes 1987. Den har ett utmärkt betyg på IMDb: 7.6 stjärnor av 10. Den är en långfilm med en speltid på 1h 42min. Robocop finns nu att hyra och att köpa på iTunes, SF Anytime, Google Play och Blockbuster. Klicka på en länk för att se den nu!"
                     break;
-                case "Alien":
-                    imgSrc = "/images/alien.jpg"
+                case "COMMUNITY":
+                    description = "När Jeff Wingers juristexamen visar sig vara förfalskad tvingas han tillbaka till college, där han bildar en udda studiegrupp. (Ett avsnitt saknas i säsong 2.)Land: USACommunity är en komediserie producerad i USA och släpptes 2009. Den har ett mycket högt betyg på IMDb: 8.5 stjärnor av 10. Community finns nu att streama på Netflix och Viaplay. Klicka på en länk för att se den nu!"
                     break;
+                case "Skyrim":
+                      description = "Winner of more than 200 Game of the Year Awards, Skyrim Special Edition brings the epic fantasy to life in stunning detail. The Special Edition includes the critically acclaimed game and add-ons with all-new features like remastered art and effects, volumetric god rays, dynamic depth of field, screen-space"
+                      break;
+                case '1984':
+                     description = "Nineteen Eighty-Four (also stylised as 1984) is a dystopian social science fiction novel and cautionary tale written by the English writer George Orwell. It was published on 8 June 1949 by Secker & Warburg as Orwell's ninth and final book completed in his lifetime. Thematically, it centres on the consequences of totalitarianism, mass surveillance and repressive regimentation of people and behaviours within society.[2][3] Orwell, a democratic socialist, modelled the authoritarian state in the novel on Stalinist Russia and Nazi Germany.[2][3][4] More broadly, the novel examines the role of truth and facts within societies and the ways in which they can be manipulated.";
+                     break;
+                case "Berserk":
+                     description = "Berserk (Japanese: ベルセルク, Hepburn: Beruseruku) is a Japanese manga series written and illustrated by Kentaro Miura. Set in a medieval Europe-inspired dark fantasy world, the story centers on the characters of Guts, a lone swordsman, and Griffith, the leader of a mercenary band called the Band of the Hawk. Miura premiered a prototype of Berserk in 1988. The series began the following year in the Hakusensha's now-defunct magazine Monthly Animal House, which was replaced in 1992 by the semimonthly magazine Young Animal, where Berserk has continued its publication. "
+                      break;
+                case "COMMUNITY":
+                      description = "/images/community.jpg"
+                      break;
+                case "Ice Cream":
+                      description = "i want to make ice cream"
+                       break;
+                case "Sushi":
+                      description = "sushi is from japan and is very tasty"
+                      break;
                 default:
                 description = "no description found"
             }

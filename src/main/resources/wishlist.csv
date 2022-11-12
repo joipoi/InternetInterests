@@ -1,4 +1,4 @@
 name,type,link,date,haveTried,rating
-hitchhikers guide to the galaxy,book,aBookStore,2021-01-05,true,3
-robocop,movie,youtube.com,1999-06-01,true,-1
-the office,tvShow,netlix.com,2011,true,2
+Robocop,movie,https://www.playpilot.com/se/movie/robocop/,,false,-1
+COMMUNITY,tvShow,https://www.playpilot.com/se/show/community/,2009-04-07,true,3
+1984,book,https://openlibrary.org/works/OL1168083W/Nineteen_Eighty-Four?edition=ia%3Anineteeneightyfo0000unse_t8z6,,false,-1
