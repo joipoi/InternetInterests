@@ -1,70 +1,69 @@
- /*Every page */
-body{
- margin: 0;
- margin-left: 10px;
- background-color: #ff;
- }
- header{
- background-color: #233257;
- height:60px;
-     top: 0;
- }
- #sideDiv{
- background-color: #233257;
-  height:1000px;
- width:20%;
-      float:right;
-      position: relative;
- }
- .button1 {
-   background-color: #4CAF50; /* Green */
-   border: none;
-   color: white;
-   padding: 15px 32px;
-   text-align: center;
-   text-decoration: none;
-   display: inline-block;
-   font-size: 16px;
-   margin: 4px 2px;
-   cursor: pointer;
- }
+ /*General style */
 
- /*list or wishlist page */
+body{
+  margin: 0;
+  background-color: #ff;
+}
+header{
+  background-color: #233257;
+  height:60px;
+}
+#sideDiv{
+  background-color: #233257;
+  height:1000px;
+  width:18%;
+  float:right;
+  position: relative;
+}
+.button1 {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+ /*Style for list or wishlist pages */
 #mediaTable {
-    width: 100%;
+  width: 100%;
 }
 #mediaTable td, #ingredientsTable th {
-    border: 1px solid #ddd;
-    padding: 8px;
-    padding-bottom:  10px;
-  }
+  border: 1px solid #ddd;
+  padding: 8px;
+  padding-bottom:  10px;
+}
 #mediaTable th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #04AA6D;
-    color: white;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
 }
 #mediaTable tr:hover {background-color: #ddd;}
 
 #addDiv {
- display: none;
-    z-index: 1;
-    border:solid;
-    padding:10px;
+  display: none;
+  z-index: 1;
+  border:solid;
+  padding:10px;
 }
 
 
 #mediaTableDiv{
-width:68%;
-    float:left;
-    position:relative;
+  width:68%;
+  float:left;
+  position:relative;
 }
 .checked {
   color: orange;
 }
 .select1{
- background-color: #0563af;
+  background-color: #0563af;
   color: white;
   padding: 12px;
   width: 250px;
@@ -72,37 +71,36 @@ width:68%;
   font-size: 20px;
 }
 #typeSelect2{
-	width:70%;
+  width:70%;
 }
 #myForm label{
-	display:block;
-	  color: white;
+  display:block;
+  color: white;
   font-size: 20px;
 }
 #myForm input, select{
-	padding: 7px;
-	width:60%;
+  padding: 7px;
+  width:60%;
 }
 
-
-/* media page */
+/* style for media page */
 .mediaDiv{
-float:left;
-width:20%;
-height:350px;
-cursor: pointer;
-white-space: nowrap;
+  float:left;
+  width:20%;
+  height:350px;
+  cursor: pointer;
+  white-space: nowrap;
   overflow: hidden;
 }
 #mediaPageDiv {
-width:68%;
-float:left;
-    position:relative;
+  width:68%;
+  float:left;
+  position:relative;
 }
 
 #mediaBox { /* this element gets created in javascript, probably bad practise */
-float:left;
-width:40%;
+  float:left;
+  width:40%;
 }
 #mediaBox p, #mediaBox a{
   border: none;
@@ -110,18 +108,18 @@ width:40%;
 }
 
 #mediaTextBox{  /* this element gets created in javascript, probably bad practise */
-float:left;
-width:50%;
- margin-left:4%;
-	    font-family: Poppins,Helvetica,sans-serif;
-    font-size: 1.2rem;
-    font-weight: 400;
-    letter-spacing: .8px;
-    line-height: 1.6;
+  float:left;
+  width:50%;
+  margin-left:4%;
+  font-family: Poppins,Helvetica,sans-serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  letter-spacing: .8px;
+  line-height: 1.6;
 }
 #wishListLink{
-margin-left:260px;
-width:250px;
+  margin-left:260px;
+  width:250px;
 }
 
 

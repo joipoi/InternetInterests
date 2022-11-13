@@ -1,59 +1,45 @@
-var table 
 var selectedRow;
 var mediaList;
 var haveTriedSelect;
 var typeSelect;
 var tableDiv;
-var isSimpleView;
 
 
-function init(mediaList1) {
+function init(mediaListTemp) {
     tableDiv = document.getElementById("mediaTableDiv");
-    table = document.getElementById("mediaTable");
-    mediaList = mediaList1;
+    mediaList = mediaListTemp;
 
-
-
-    localStorage.setItem("haveSeenSelect","all");
-    localStorage.setItem("typeSelect","all");
-
-
-
+    //checks if localStorage has been set, if not, it is the users first connection to the site, so we set localStorage to default values
     if(localStorage.getItem("simpleView") == null) {
-         localStorage.setItem("simpleView","true" );
+        localStorage.setItem("simpleView","true" );
+        localStorage.setItem("haveSeenSelect","all");
+        localStorage.setItem("typeSelect","all");
+    }
+    //sets the values of the html select elements to match localStorage
+    if(document.getElementById("haveSeenSelect").value != null) { //this is because im reusing code on different pages that dont have this element
+        document.getElementById("haveSeenSelect").value = localStorage.getItem("haveSeenSelect");
     }
 
-    if(localStorage.getItem("simpleView") === "true") {
-        isSimpleView = true;
-    }else if(localStorage.getItem("simpleView") === "true") {
-        isSimpleView = false;
-    }
+    document.getElementById("typeSelect").value = localStorage.getItem("typeSelect");
 
+    //initializes html button variables and eventListeners for them which call methods
     var addMediaBtn = document.getElementById("addMediaBtn");
-
     var submitMediaBtn = document.getElementById("submitMediaBtn");
-
     var setAsHaveTriedBtn = document.getElementById("haveTriedBtn");
-
     var removeButton = document.getElementById("removeMediaBtn");
-
     var changeViewBtn = document.getElementById("changeViewBtn")
 
-
-
-    if(addMediaBtn != null) {
-    submitMediaBtn.addEventListener("click", function(){
-            addRowToDB();
+    if(addMediaBtn != null) { //addMediaBtn will be null when on wishlist page because that button is not on that page(maybe bad code)
+        submitMediaBtn.addEventListener("click", function(){
+            submitAddMedia();
         });
-
-    document.getElementById("addDiv").style.display = "none";
-    addMediaBtn.addEventListener("click", function(){
-        showAddMedia();
-    });
+        document.getElementById("addDiv").style.display = "none";
+        addMediaBtn.addEventListener("click", function(){
+            showAddMedia();
+        });
     }
-
     changeViewBtn.addEventListener("click", function() {
-        if(isSimpleView) {
+        if(localStorage.getItem("simpleView") === "true") {
             generateMediaTableAlt();
         }else {
             generateMediaTable();
@@ -61,126 +47,92 @@ function init(mediaList1) {
     });
 }
 
+//generates media based on if the user wants a "simpleView" or not
 function generateCorrectMediaList() {
-    if(isSimpleView) {
-                 generateMediaTable();
-            }else {
-                generateMediaTableAlt();
-            }
+    if(localStorage.getItem("simpleView") === "true") {
+        generateMediaTable();
+    }else if(localStorage.getItem("simpleView") === "false") {
+         generateMediaTableAlt();
+    }
+
 }
 
 //simple media list with table view
 function generateMediaTable() {
-    localStorage.setItem("simpleView","true" );
+localStorage.setItem("simpleView","true");
+
+    //local storage shows us what was being shown to the user the last time they looked at the mediaTable
+    typeSelect = localStorage.getItem("typeSelect");
+    haveTriedSelect = localStorage.getItem("haveSeenSelect");
+
+    //resets the tableDiv and creates a new table for a new mediaList
+    tableDiv.innerHTML = "";
+    var table = document.createElement('table');
+    table.id = 'mediaTable';
+    tableDiv.appendChild(table);
+
+    var tr = document.createElement('tr');
+     //the first tableRow has the headers which include an onclick event which sorts the columns
+    tr.innerHTML = '   <th onclick="sortTable(0)">Name</th> <th onclick="sortTable(1)">Type</th>  <th onclick="sortTable(2)">Link</th>  <th onclick="sortTable(3)">ViewedDate</th>  <th onclick="sortTable(4)">haveTried</th>  <th onclick="sortTable(5)">Rating</th>';
+    table.appendChild(tr);
+
+    //loops throught mediaList, shows media if it matches the 'type' and 'haveTried' attributes
+    for(var row = 0; row < mediaList.length; row++) {
+        if( (mediaList[row].type == typeSelect || typeSelect === "all") && (mediaList[row].haveTried == isStringTrue(haveTriedSelect) || haveTriedSelect === 'all')) {
+            var tr = document.createElement('tr');
+
+            //makes every row selectable
+            tr.addEventListener("click", function() {
+                setAsSelected(this);
+            });
+
+            var name = document.createElement('td');
+            //clicking on the name brings you to the media page along with the mediaName as url paramter
+            name.innerHTML = '<a href="media?mediaName=' + mediaList[row].name +  '">' + mediaList[row].name + '</a>';
+            tr.appendChild(name);
+
+            var type = document.createElement('td');
+            type.innerHTML = mediaList[row].type;
+            tr.appendChild(type);
+
+            var link = document.createElement('td');
+            link.innerHTML = "<a href=" +mediaList[row].link + ">"+ mediaList[row].link +  "</a>";
+            tr.appendChild(link);
+
+            var date = document.createElement('td');
+            date.innerHTML =  mediaList[row].stringDate;
+            tr.appendChild(date);
+
+            var haveTried = document.createElement('td');
+            haveTried.innerHTML = mediaList[row].haveTried;
+            tr.appendChild(haveTried);
+
+            var rating = document.createElement('td');
+            //if the media has no rating we give it -1
+            if(mediaList[row].rating == -1) {
+                rating.innerHTML = ""
+            }else{
+                rating.innerHTML = mediaList[row].rating;
+            }
+            tr.appendChild(rating);
+
+            table.appendChild(tr)
+        }
+    }
+}
+//media list with images
+function generateMediaTableAlt() {
+    localStorage.setItem("simpleView","false");
 
     typeSelect = localStorage.getItem("typeSelect");
     haveTriedSelect = localStorage.getItem("haveSeenSelect");
 
+    tableDiv.innerHTML = "";
 
-        if(typeSelect == "" || typeSelect == null) {
-            typeSelect = "all";
-        }
-        tableDiv.innerHTML = "";
-        table = document.createElement('table');
-        table.id = 'mediaTable';
-        tableDiv.appendChild(table);
-
-        var allTypes = false;
-        var allHaveTried = false;
-
-        if(typeSelect == "all") {
-            allTypes = true;
-        }
-        if(haveTriedSelect == "all") {
-            allHaveTried = true;
-        }else if(haveTriedSelect === "true") {
-            haveTriedSelect = true;
-        }else if(haveTriedSelect === "false") {
-                     haveTriedSelect = false;
-                 }
-
-        var tr = document.createElement('tr');
-        tr.innerHTML = '   <th onclick="sortTable(0)">Name</th> <th onclick="sortTable(1)">Type</th>  <th onclick="sortTable(2)">Link</th>  <th onclick="sortTable(3)">ViewedDate</th>  <th onclick="sortTable(4)">haveTried</th>  <th onclick="sortTable(5)">Rating</th>';
-        table.appendChild(tr);
+    //loops throught mediaList, shows media if it matches the 'type' and 'haveTried' attributes. adds image from getImgSrc method and rating from generateStarsFromRating
     for(var row = 0; row < mediaList.length; row++) {
 
-        if( (mediaList[row].type == typeSelect || allTypes) && (mediaList[row].haveTried == haveTriedSelect || allHaveTried)) {
-            var tr = document.createElement('tr');
-
-        tr.addEventListener("click", function() {
-                    setAsSelected(this);
-
-                 });
-
-        var name = document.createElement('td');
-        name.innerHTML = '<a href="media?mediaName=' + mediaList[row].name +  '">' + mediaList[row].name + '</a>';
-
-        /* name.addEventListener("click", function() {
-                            window.location.replace("media?mediaName=" + mediaList[row].name);
-                         }); */
-
-        tr.appendChild(name);
-        var type = document.createElement('td');
-        type.innerHTML = mediaList[row].type;
-        tr.appendChild(type);
-        var link = document.createElement('td');
-        link.innerHTML = "<a href=" +mediaList[row].link + ">"+ mediaList[row].link +  "</a>";
-        tr.appendChild(link);
-        var date = document.createElement('td');
-        date.innerHTML =  mediaList[row].stringDate;
-        tr.appendChild(date);
-        var haveTried = document.createElement('td');
-        haveTried.innerHTML = mediaList[row].haveTried;
-        tr.appendChild(haveTried);
-        var rating = document.createElement('td');
-        if(mediaList[row].rating == -1) {
-           rating.innerHTML = ""
-        }else{
-            rating.innerHTML = mediaList[row].rating;
-        }
-
-        tr.appendChild(rating);
-
-        table.appendChild(tr)
-        }
-    }
-    isSimpleView = true;
-}
-//media list with images
-function generateMediaTableAlt() {
-localStorage.setItem("simpleView","false");
-
- typeSelect = localStorage.getItem("typeSelect");
-    haveTriedSelect = localStorage.getItem("haveSeenSelect");
-
-if(typeSelect == "" || typeSelect == null) {
-            typeSelect = "all";
-        }
-
-        tableDiv.innerHTML = "";
-
-        //this is something
-        var allTypes = false;
-        var allHaveTried = false;
-
-        if(typeSelect == "all") {
-            allTypes = true;
-        }
-        if(haveTriedSelect == "all") {
-                   allHaveTried = true;
-               }else if(haveTriedSelect === "true") {
-                   haveTriedSelect = true;
-               }else if(haveTriedSelect === "false") {
-                            haveTriedSelect = false;
-                        }
-
-
-        //here we make html elements
-
-
-    for(var row = 0; row < mediaList.length; row++) {
-
-        if( (mediaList[row].type == typeSelect || allTypes) && (mediaList[row].haveTried == haveTriedSelect || allHaveTried)) {
+        if( (mediaList[row].type == typeSelect || typeSelect === "all") && (mediaList[row].haveTried == isStringTrue(haveTriedSelect) || haveTriedSelect === 'all')) {
             var mediaDiv = document.createElement('div');
             var innerHtmlString = "";
 
@@ -190,168 +142,159 @@ if(typeSelect == "" || typeSelect == null) {
 
             innerHtmlString += '</div>';
 
-        mediaDiv.innerHTML = innerHtmlString;
-        mediaDiv.addEventListener("click", function() {
-        var name = this.getElementsByTagName('p')[0].innerHTML;
-                    window.location.replace("media?mediaName=" + name);
-                 });
+            mediaDiv.innerHTML = innerHtmlString;
 
-        tableDiv.appendChild(mediaDiv);
-        }
-    }
-    isSimpleView = false;
+            //clicking on a media brings you to media page with the mediaName as url paramater
+            mediaDiv.addEventListener("click", function() {
+                var name = this.getElementsByTagName('p')[0].innerHTML;
+                window.location.replace("media?mediaName=" + name);
+            });
 
-}
-function generateMediaPage(mediaList2, media) {
-var mediaPageDiv = document.getElementById("mediaPageDiv");
-var innerHtmlString = "";
- innerHtmlString += '<div id="mediaBox"> <img src="' + getImgSrc(media) +  '"  width="100%" height="100%"> <p>' + media.name + "</p> <p>" + media.date + "</p> <p>";
-innerHtmlString += generateStarsFromRating(media.rating);
-innerHtmlString += " </p> <a href=" +media.link + ">"+ media.link +  "</a>"  + '</div>';
- innerHtmlString += "<div id='mediaTextBox'> <p>" + getDescription(media.name) +  "</p> </div>"
-
-
- mediaPageDiv.innerHTML += innerHtmlString;
-
-    for(var i = 0; i < mediaList2.length; i++) {
-        if(mediaList2[i].name == media.name) {
-            console.log(mediaList2[i].name + " type: " + mediaList2[i].type);
+            tableDiv.appendChild(mediaDiv);
         }
     }
 
-//img(poster), p(name), stars(rating), p(date), p(description), a(link), haveTried(??)
 }
 
+function generateMediaPage(media) {
+    //creates a div with data from media including img, name, date, link, description
+    var mediaPageDiv = document.getElementById("mediaPageDiv");
+    var innerHtmlString = "";
+    innerHtmlString += '<div id="mediaBox"> <img src="' + getImgSrc(media) +  '"  width="100%" height="100%"> <p>' + media.name + "</p> <p>" + media.date + "</p> <p>";
+    innerHtmlString += generateStarsFromRating(media.rating);
+    innerHtmlString += " </p> <a href=" +media.link + ">"+ media.link +  "</a>"  + '</div>';
+    innerHtmlString += "<div id='mediaTextBox'> <p>" + getDescription(media.name) +  "</p> </div>"
+    mediaPageDiv.innerHTML += innerHtmlString;
+}
+
+//returns a string of html code which has stars based on rating. black star means no star, gold star means star. rating = 3 --> 3 gold stars
+//the stars are stolen from the internet i link to another css page from my html pages
 function generateStarsFromRating(rating) {
     var htmlStarString = "";
+    var htmlBlackStar = '<span class="fa fa-star"></span>';
+    var htmlGoldStar = '<span class="fa fa-star checked"></span>';
     switch(rating) {
-                 case 0: htmlStarString = '<span class="fa fa-star"></span> <span class="fa fa-star"></span>  <span class="fa fa-star"></span> '
-                 break;
-                 case 1: htmlStarString = '<span class="fa fa-star checked"></span> <span class="fa fa-star"></span>  <span class="fa fa-star"></span> '
-                 break;
-                 case 2: htmlStarString = '<span class="fa fa-star checked"></span> <span class="fa fa-star checked"></span>  <span class="fa fa-star"></span> '
-                 break;
-                 case 3: htmlStarString = '<span class="fa fa-star checked"></span> <span class="fa fa-star checked"></span>  <span class="fa fa-star checked"></span> '
-                 break;
+        case 0:
+            htmlStarString = htmlBlackStar + htmlBlackStar + htmlBlackStar;
+            break;
+        case 1:
+            htmlStarString = htmlGoldStar + htmlBlackStar + htmlBlackStar;
+            break;
+        case 2:
+            htmlStarString = htmlGoldStar + htmlGoldStar + htmlBlackStar;
+            break;
+        case 3:
+            htmlStarString = htmlGoldStar + htmlGoldStar + htmlGoldStar;
+            break;
 
-}
-return htmlStarString;
-
+    }
+    return htmlStarString;
 }
 
 //the image icons are hardcoded because I don't have a database for images. would not look like this in production
 function getImgSrc(media) {
-var imgSrc;
- switch(media.name) {
-                case 'Robocop':
-                    imgSrc = "/images/robocop.jpg";
-                    break;
-                case "Alien":
-                    imgSrc = "/images/alien.jpg"
-                    break;
-                case "Skyrim":
-                      imgSrc = "/images/skyrim.jpg"
-                      break;
-                case '1984':
-                     imgSrc = "/images/1984.jpg";
-                     break;
-                case "Berserk":
-                     imgSrc = "/images/berserk.jpg"
-                      break;
-                case "COMMUNITY":
-                      imgSrc = "/images/community.jpg"
-                      break;
-                case "Ice Cream":
-                      imgSrc = "/images/IceCream.jpg"
-                       break;
-                case "Sushi":
-                      imgSrc = "/images/sushi.jpg"
-                      break;
-
-
-                default:
-                imgSrc = "/images/" + media.type + ".jpg"
-            }
-
-         return imgSrc;
+    var imgSrc;
+    switch(media.name) {
+        case 'Robocop':
+            imgSrc = "/images/robocop.jpg";
+            break;
+        case "Alien":
+            imgSrc = "/images/alien.jpg"
+            break;
+        case "Skyrim":
+            imgSrc = "/images/skyrim.jpg"
+            break;
+        case '1984':
+            imgSrc = "/images/1984.jpg";
+            break;
+        case "Berserk":
+            imgSrc = "/images/berserk.jpg"
+            break;
+        case "COMMUNITY":
+            imgSrc = "/images/community.jpg"
+            break;
+        case "Ice Cream":
+            imgSrc = "/images/IceCream.jpg"
+            break;
+        case "Sushi":
+            imgSrc = "/images/sushi.jpg"
+            break;
+        default:
+            imgSrc = "/images/" + media.type + ".jpg"
+     }
+     return imgSrc;
 }
+//the descriptions are hardcoded which would be bad if this was a real project. i just decided not to implement this properly
 function getDescription(mediaName) {
-var description;
- switch(mediaName) {
-                case 'Robocop':
-                    description = "I ett framtida Detroit är kriminaliteten extrem. Polisen har privatiserats och ägs av företaget OCP, som lanserar ett nytt vapen mot skurkarna: en polisrobot. När polismannen Alex Murphy har mördats av ett gatugäng får hans kropp ett skal av stål. Resultatet blir Robocop, som gör succé som brottsbekämpare. Men hans framgång gör att superskurken Boddicker måste göra allt för att röja honom ur vägen.Land: USA Robocop är en sci-fi-, action- och thrillerfilm producerad i USA och släpptes 1987. Den har ett utmärkt betyg på IMDb: 7.6 stjärnor av 10. Den är en långfilm med en speltid på 1h 42min. Robocop finns nu att hyra och att köpa på iTunes, SF Anytime, Google Play och Blockbuster. Klicka på en länk för att se den nu!"
-                    break;
-                case "COMMUNITY":
-                    description = "När Jeff Wingers juristexamen visar sig vara förfalskad tvingas han tillbaka till college, där han bildar en udda studiegrupp. (Ett avsnitt saknas i säsong 2.)Land: USACommunity är en komediserie producerad i USA och släpptes 2009. Den har ett mycket högt betyg på IMDb: 8.5 stjärnor av 10. Community finns nu att streama på Netflix och Viaplay. Klicka på en länk för att se den nu!"
-                    break;
-                case "Skyrim":
-                      description = "Winner of more than 200 Game of the Year Awards, Skyrim Special Edition brings the epic fantasy to life in stunning detail. The Special Edition includes the critically acclaimed game and add-ons with all-new features like remastered art and effects, volumetric god rays, dynamic depth of field, screen-space"
-                      break;
-                case '1984':
-                     description = "Nineteen Eighty-Four (also stylised as 1984) is a dystopian social science fiction novel and cautionary tale written by the English writer George Orwell. It was published on 8 June 1949 by Secker & Warburg as Orwell's ninth and final book completed in his lifetime. Thematically, it centres on the consequences of totalitarianism, mass surveillance and repressive regimentation of people and behaviours within society.[2][3] Orwell, a democratic socialist, modelled the authoritarian state in the novel on Stalinist Russia and Nazi Germany.[2][3][4] More broadly, the novel examines the role of truth and facts within societies and the ways in which they can be manipulated.";
-                     break;
-                case "Berserk":
-                     description = "Berserk (Japanese: ベルセルク, Hepburn: Beruseruku) is a Japanese manga series written and illustrated by Kentaro Miura. Set in a medieval Europe-inspired dark fantasy world, the story centers on the characters of Guts, a lone swordsman, and Griffith, the leader of a mercenary band called the Band of the Hawk. Miura premiered a prototype of Berserk in 1988. The series began the following year in the Hakusensha's now-defunct magazine Monthly Animal House, which was replaced in 1992 by the semimonthly magazine Young Animal, where Berserk has continued its publication. "
-                      break;
-                case "COMMUNITY":
-                      description = "/images/community.jpg"
-                      break;
-                case "Ice Cream":
-                      description = "i want to make ice cream"
-                       break;
-                case "Sushi":
-                      description = "sushi is from japan and is very tasty"
-                      break;
-                default:
-                description = "no description found"
-            }
+    var description;
+    switch(mediaName) {
+        case 'Robocop':
+            description = "I ett framtida Detroit är kriminaliteten extrem. Polisen har privatiserats och ägs av företaget OCP, som lanserar ett nytt vapen mot skurkarna: en polisrobot. När polismannen Alex Murphy har mördats av ett gatugäng får hans kropp ett skal av stål. Resultatet blir Robocop, som gör succé som brottsbekämpare. Men hans framgång gör att superskurken Boddicker måste göra allt för att röja honom ur vägen.Land: USA Robocop är en sci-fi-, action- och thrillerfilm producerad i USA och släpptes 1987. Den har ett utmärkt betyg på IMDb: 7.6 stjärnor av 10. Den är en långfilm med en speltid på 1h 42min. Robocop finns nu att hyra och att köpa på iTunes, SF Anytime, Google Play och Blockbuster. Klicka på en länk för att se den nu!"
+            break;
+        case "COMMUNITY":
+            description = "När Jeff Wingers juristexamen visar sig vara förfalskad tvingas han tillbaka till college, där han bildar en udda studiegrupp. (Ett avsnitt saknas i säsong 2.)Land: USACommunity är en komediserie producerad i USA och släpptes 2009. Den har ett mycket högt betyg på IMDb: 8.5 stjärnor av 10. Community finns nu att streama på Netflix och Viaplay. Klicka på en länk för att se den nu!"
+            break;
+        case "Skyrim":
+            description = "Winner of more than 200 Game of the Year Awards, Skyrim Special Edition brings the epic fantasy to life in stunning detail. The Special Edition includes the critically acclaimed game and add-ons with all-new features like remastered art and effects, volumetric god rays, dynamic depth of field, screen-space"
+            break;
+        case '1984':
+            description = "Nineteen Eighty-Four (also stylised as 1984) is a dystopian social science fiction novel and cautionary tale written by the English writer George Orwell. It was published on 8 June 1949 by Secker & Warburg as Orwell's ninth and final book completed in his lifetime. Thematically, it centres on the consequences of totalitarianism, mass surveillance and repressive regimentation of people and behaviours within society.[2][3] Orwell, a democratic socialist, modelled the authoritarian state in the novel on Stalinist Russia and Nazi Germany.[2][3][4] More broadly, the novel examines the role of truth and facts within societies and the ways in which they can be manipulated.";
+            break;
+        case "Berserk":
+            description = "Berserk (Japanese: ベルセルク, Hepburn: Beruseruku) is a Japanese manga series written and illustrated by Kentaro Miura. Set in a medieval Europe-inspired dark fantasy world, the story centers on the characters of Guts, a lone swordsman, and Griffith, the leader of a mercenary band called the Band of the Hawk. Miura premiered a prototype of Berserk in 1988. The series began the following year in the Hakusensha's now-defunct magazine Monthly Animal House, which was replaced in 1992 by the semimonthly magazine Young Animal, where Berserk has continued its publication. "
+            break;
+        case "COMMUNITY":
+            description = "/images/community.jpg"
+            break;
+        case "Ice Cream":
+            description = "i want to make ice cream"
+            break;
+        case "Sushi":
+            description = "sushi is from japan and is very tasty"
+            break;
+        default:
+            description = "no description found"
+    }
 
-         return description;
+    return description;
 }
 
+//gets called when 'haveSeenSelect's value changes, sets localStorage for the haveSeenSelect value and refreshes the media list
 function haveSeenSelectFunc() {
     var haveSeenSelectValue = document.getElementById("haveSeenSelect").value;
 
-    if(haveSeenSelectValue == "all") {
-    localStorage.setItem("haveSeenSelect",haveSeenSelectValue );
-    }else if(haveSeenSelectValue == "past") {
-         localStorage.setItem("haveSeenSelect",true );
-    }else if(haveSeenSelectValue == "future") {
-    localStorage.setItem("haveSeenSelect",false );
-         }
-     if(isSimpleView) {
-         generateMediaTable();
-         } else {
-         generateMediaTableAlt();
-         }
+    if(haveSeenSelectValue === "all") {
+        localStorage.setItem("haveSeenSelect",haveSeenSelectValue );
+    }else if(haveSeenSelectValue === "true") {
+        localStorage.setItem("haveSeenSelect",true );
+    }else if(haveSeenSelectValue === "false") {
+        localStorage.setItem("haveSeenSelect",false );
+    }
+   generateCorrectMediaList();
 }
+//gets called when 'typeSelect's value changes, sets localStorage for the typeSelect value and refreshes the media list
 function typeSelectFunc() {
     typeSelect = document.getElementById("typeSelect").value;
-    console.log(typeSelect);
-     localStorage.setItem("typeSelect",typeSelect);
+    localStorage.setItem("typeSelect",typeSelect);
 
-    if(isSimpleView) {
-    generateMediaTable();
-    } else {
-    generateMediaTableAlt();
+    generateCorrectMediaList();
+}
+
+//shows the html elements that lets the user add a media to the mediaList
+function showAddMedia() {
+    if(document.getElementById("addDiv").style.display == "block") {
+        document.getElementById("addDiv").style.display = "none";
+    }else {
+        document.getElementById("addDiv").style.display = "block";
     }
 }
-
-function showAddMedia() {
-if(document.getElementById("addDiv").style.display == "block") {
-    document.getElementById("addDiv").style.display = "none";
-}else {
-    document.getElementById("addDiv").style.display = "block";
-
-}
-
-
-}
-function addRowToDB() {//fix names
+//submits the form that adds media to mediaList
+function submitAddMedia() {
         var myForm = document.getElementById("myForm");
-              myForm.submit();
+        myForm.submit();
 }
-//stole this from the internet
+
+//sort an html table either alphabetically or numerically. n = index of clicked element. (stole this from the internet)
 function sortTable(n) {
     var rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     switching = true;
@@ -406,24 +349,26 @@ function sortTable(n) {
     }
   }
 
+//sets the clicked row of the mediaTable as selected with a variable and some style
 function setAsSelected(rowObj) {
-
-if(selectedRow != null) {
-
-    selectedRow.style.backgroundColor = "white";
-}
+    //if a row is selected already, make it white so as to de-select
+    if(selectedRow != null) {
+        selectedRow.style.backgroundColor = "white";
+    }
     selectedRow = rowObj;
     selectedRow.style.backgroundColor = "#997f7d";
 }
 
+//i call this from an html page in the script tag, cause i cant access variables there.
 function getSelectedRowText() {
-
 return selectedRow.children[0].innerText;
 }
-/*
-function setLocalStorage(String key, String value) {
-
-} */
-
-//todo let user change database for example mark media as "havetried".
-//todo make the table have a maxHeight so you scroll in a box instead of having to scroll the whole page.
+//general function for converting string to bool
+function isStringTrue(s) {
+    if(s === 'true') {
+        return true;
+    }
+    else {
+        return false;
+    }
+}

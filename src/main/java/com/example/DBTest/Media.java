@@ -11,7 +11,6 @@ public class Media {
     String type;
     String link;
     String stringDate;
-    Date date;
     boolean haveTried;
     int rating;
 
@@ -40,8 +39,6 @@ public class Media {
     public void setRating(int rating) {
         this.rating = rating;
     }
-
-
 
     public String getName() {
         return name;
@@ -72,7 +69,7 @@ public class Media {
     }
 
     public void setDate(Date date) {
-        this.date = date;
+        this.stringDate = stringDate;
     }
 
     public Media(String name, String type, String link, String stringDate, boolean haveTried, int rating)  {
@@ -84,16 +81,6 @@ public class Media {
         this.rating = rating;
     }
     public Media() {
-
-    }
-
-    public String[] getStringArray() {
-        String[] strings = new String[4];
-        strings[0] = type;
-        strings[1] = name;
-        strings[2] = link;
-        strings[3] = stringDate;
-        return strings;
 
     }
 
