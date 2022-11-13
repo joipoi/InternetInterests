@@ -88,7 +88,7 @@ localStorage.setItem("simpleView","true");
 
             var name = document.createElement('td');
             //clicking on the name brings you to the media page along with the mediaName as url paramter
-            name.innerHTML = '<a href="media?mediaName=' + mediaList[row].name +  '">' + mediaList[row].name + '</a>';
+            name.innerHTML = '<a href="/media?mediaName=' + mediaList[row].name +  '">' + mediaList[row].name + '</a>';
             tr.appendChild(name);
 
             var type = document.createElement('td');
@@ -147,7 +147,7 @@ function generateMediaTableAlt() {
             //clicking on a media brings you to media page with the mediaName as url paramater
             mediaDiv.addEventListener("click", function() {
                 var name = this.getElementsByTagName('p')[0].innerHTML;
-                window.location.replace("media?mediaName=" + name);
+                window.location.replace("/media?mediaName=" + name);
             });
 
             tableDiv.appendChild(mediaDiv);
