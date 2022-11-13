@@ -16,7 +16,7 @@ function init(mediaListTemp) {
         localStorage.setItem("typeSelect","all");
     }
     //sets the values of the html select elements to match localStorage
-    if(document.getElementById("haveSeenSelect").value != null) { //this is because im reusing code on different pages that dont have this element
+    if(document.getElementById("haveSeenSelect") != null) { //this is because im reusing code on different pages that dont have this element
         document.getElementById("haveSeenSelect").value = localStorage.getItem("haveSeenSelect");
     }
 
